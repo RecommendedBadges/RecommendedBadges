@@ -55,15 +55,16 @@ package.xml
 
 # Ignored Packages
 #Core
-#fflib
-#LWCErrorHandler
+fflib
+LWCErrorHandler
 #LWCUtils
-#PrivateMixView
-#RecommendedBadgeMix
-#SortCustomMetadata
-#StorageManagement
+PrivateMixView
+#RecommendedArticles
+RecommendedBadgeMix
+SortCustomMetadata
+StorageManagement
 #Triggers
-#UserInterface
+UserInterface
 
 # Ignored Folders
 #unpackageable

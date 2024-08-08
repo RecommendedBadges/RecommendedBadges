@@ -2,12 +2,34 @@
 public class MixCategoryTS extends TestSupport.DataGeneration {
     public RecommendedBadgeMixTS badgeMixGenerator;
 
-    @SuppressWarnings('PMD.ApexDoc')
+    /**
+     * No arg constructor
+     */       
+    public MixCategoryTS() {
+        this(new Map<String, Object>(), new List<TestSupport.TestDataField>());
+    }
+
+    /**
+     * Constructor with configuration options
+     * @param options 
+     */
     public MixCategoryTS(Map<String, Object> options) {
         this(options, new List<TestSupport.TestDataField>());
     }
 
-    @SuppressWarnings('PMD.ApexDoc')
+    /**
+     * Constructor with custom field specs
+     * @param fieldSpecs 
+     */    
+    public MixCategoryTS(List<TestSupport.TestDataField> fieldSpecs) {
+        this(new Map<String, Object>(), fieldSpecs);
+    }
+
+    /**
+     * Constructor with configuration options and custom field specs
+     * @param options 
+     * @param fieldSpecs 
+     */    
     public MixCategoryTS(Map<String, Object> options, List<TestSupport.TestDataField> fieldSpecs) {
         super(options, fieldSpecs);
         this.S_OBJECT_TYPE = 'Mix_Category__c';

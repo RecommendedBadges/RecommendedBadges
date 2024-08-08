@@ -1,0 +1,14 @@
+:host {
+    --slds-c-card-radius-border: 10em;
+    --slds-c-card-color-border: #73a5c2;
+    --slds-c-card-sizing-border: 0.1em;
+}
+
+.pillBorder {
+    border: 2px solid black; 
+    border-radius: 10em;
+}
+
+.tileDisplay {
+    display: inline-block;
+}

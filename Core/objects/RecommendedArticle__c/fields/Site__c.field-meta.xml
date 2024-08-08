@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Site__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(CONTAINS(URL__c, &quot;https://developer.salesforce.com/blogs&quot;), &quot;Salesforce Developers Blog&quot;,
   IF(CONTAINS(URL__c, &quot;https://medium.com/salesforce-architects&quot;), &quot;Salesforce Architects&quot;,
@@ -8,7 +9,11 @@
       IF(CONTAINS(URL__c, &quot;salesforceben.com&quot;), &quot;Salesforce Ben&quot;,
         IF(CONTAINS(URL__c, &quot;https://medium.com/geekculture&quot;), &quot;Medium&quot;,
           IF(CONTAINS(URL__c, &quot;https://engineering.salesforce.com&quot;), &quot;Salesforce Engineering&quot;,
-            IF(CONTAINS(URL__c, &quot;https://wiki.sfxd.org&quot;), &quot;SFXD&quot;, &quot;&quot;)
+            IF(CONTAINS(URL__c, &quot;https://wiki.sfxd.org&quot;), &quot;SFXD&quot;, 
+              IF(CONTAINS(URL__c, &quot;https://www.youtube.com/&quot;), &quot;YouTube&quot;, 
+                IF(CONTAINS(URL__c, &quot;https://admin.salesforce.com/blog&quot;), &quot;Salesforce Admins Blog&quot;, &quot;Other&quot;)
+              )
+            )
           )
         )
       )

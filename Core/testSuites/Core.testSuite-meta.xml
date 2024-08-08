@@ -5,9 +5,12 @@
     <testClassName>DefaultServiceImplementationSelectorTest</testClassName>
     <testClassName>DMLUtils_Tests</testClassName>
     <testClassName>MixCategoriesSelectorTests</testClassName>
+    <testClassName>RecommendedArticlesSelector_Tests</testClassName>
     <testClassName>RecommendedBadgeMixesSelectorTests</testClassName>
     <testClassName>RecommendedBadgesSelectorTests</testClassName>
     <testClassName>RecommendedTrailsSelectorTests</testClassName>
+    <testClassName>TopicAssignmentsSelector_Tests</testClassName>
+    <testClassName>TopicsSelector_Tests</testClassName>
     <testClassName>TrailheadEntityFormController_Tests</testClassName>
     <testClassName>TrailheadEntityService_Tests</testClassName>
 </ApexTestSuite>

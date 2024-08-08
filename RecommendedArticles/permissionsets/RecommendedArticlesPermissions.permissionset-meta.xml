@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission set for RecommendedArticles package.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Recommended Articles Permissions</label>
+</PermissionSet>

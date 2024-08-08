@@ -1,0 +1,15 @@
+<template>
+    <div class="slds-card slds-var-p-horizontal_x-large slds-var-p-vertical_small slds-var-m-vertical_x-small tileDisplay">
+        <slot name="tileContents"></slot>
+        <br/>
+   
+        <div class="slds-grid slds-wrap slds-var-m-top_medium">
+            <template for:each={pills} for:item="pill">
+                <div key={pill.id} class="slds-var-m-horizontal_medium slds-var-p-horizontal_small pillBorder">
+                    {pill.name}
+                </div>
+            </template>
+        </div>
+    </div>
+    <br/>
+</template>

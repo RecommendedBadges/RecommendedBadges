@@ -37,6 +37,7 @@ public inherited sharing class SortableFieldsSelector extends ApplicationSelecto
         for(Schema.ChildRelationship childRelationship : sortableFieldsChildRelationships) {
             if(childRelationship.getChildSObject() == Sortable_Field_Value__mdt.sObjectType) {
                 relationshipName = childRelationship.getRelationshipName();
+                break;
             }
         }
 

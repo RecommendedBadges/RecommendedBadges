@@ -103,11 +103,11 @@ private class RecommendedBadgeTrailTriggerHelper_Tests {
 
     @isTest
     private static void it_should_ignore_new_records_without_urls() {
-        RecommendedBadgeTS badgeGenerator = new RecommendedBadgeTS(new Map<String, Object>());
+        RecommendedBadgeTS badgeGenerator = new RecommendedBadgeTS();
         badgeGenerator.generate();
         List<sObject> testBadges = badgeGenerator.clearField(Recommended_Badge__c.URL__c).modifiedRecords;
 
-        RecommendedTrailTS trailGenerator = new RecommendedTrailTS(new Map<String, Object>());
+        RecommendedTrailTS trailGenerator = new RecommendedTrailTS();
         trailGenerator.generate();
         List<sObject> testTrails = trailGenerator.clearField(Recommended_Trail__c.URL__c).modifiedRecords;
 
@@ -145,18 +145,12 @@ private class RecommendedBadgeTrailTriggerHelper_Tests {
             new CounterSuffixField(Recommended_Badge__c.URL__c, RecommendedBadgeTrailTriggerHelper.TRAILHEAD_URL_MAPPINGS.get('Superbadge').defaultPath + '/Test_Superbadge_')
         }).generate();
 
-        RecommendedTrailTS trailGenerator = new RecommendedTrailTS(
-            new Map<String, Object>(),
-            new List<TestSupport.TestDataField>{
-                new CounterSuffixField(Recommended_Trail__c.URL__c, RecommendedBadgeTrailTriggerHelper.TRAILHEAD_URL_MAPPINGS.get('Trail').defaultPath + '/Test_Trail_')
-            }
-        );
-        List<Recommended_Trail__c> testTrails = (List<Recommended_Trail__c>) new RecommendedTrailTS(
-            new Map<String, Object>(),
-            new List<TestSupport.TestDataField>{
-                new CounterSuffixField(Recommended_Trail__c.URL__c, RecommendedBadgeTrailTriggerHelper.TRAILHEAD_URL_MAPPINGS.get('Trail').defaultPath + '/Test_Trail_')
-            }
-        ).generate();
+        RecommendedTrailTS trailGenerator = new RecommendedTrailTS(new List<TestSupport.TestDataField>{
+            new CounterSuffixField(Recommended_Trail__c.URL__c, RecommendedBadgeTrailTriggerHelper.TRAILHEAD_URL_MAPPINGS.get('Trail').defaultPath + '/Test_Trail_')
+        });
+        List<Recommended_Trail__c> testTrails = (List<Recommended_Trail__c>) new RecommendedTrailTS(new List<TestSupport.TestDataField>{
+            new CounterSuffixField(Recommended_Trail__c.URL__c, RecommendedBadgeTrailTriggerHelper.TRAILHEAD_URL_MAPPINGS.get('Trail').defaultPath + '/Test_Trail_')
+        }).generate();
 
         Test.startTest();
         RecommendedBadgeTrailTriggerHelper.updateURLPaths(Recommended_Badge__c.getSObjectType(), testBadges, null);
@@ -179,14 +173,14 @@ private class RecommendedBadgeTrailTriggerHelper_Tests {
 
     @isTest
     private static void it_should_ignore_updated_records_without_changed_urls() {
-        RecommendedBadgeTS badgeGenerator = new RecommendedBadgeTS(new Map<String, Object>());
+        RecommendedBadgeTS badgeGenerator = new RecommendedBadgeTS();
         Map<Id, sObject> oldTestBadges = new Map<Id, sObject>(badgeGenerator.generate());
         List<Recommended_Badge__c> updatedTestBadges = (List<Recommended_Badge__c>) badgeGenerator.changeField(
             Recommended_Badge__c.Description__c, 'Updated description.'
         ).modifiedRecords;
         Map<Id, Recommended_Badge__c> expectedUpdatedBadges = new Map<Id, Recommended_Badge__c>(updatedTestBadges.deepClone(true));
 
-        RecommendedTrailTS trailGenerator = new RecommendedTrailTS(new Map<String, Object>());
+        RecommendedTrailTS trailGenerator = new RecommendedTrailTS();
         Map<Id, sObject> oldTestTrails = new Map<Id, sObject>(trailGenerator.generate());
         List<Recommended_Trail__c> updatedTestTrails = (List<Recommended_Trail__c>) trailGenerator.changeField(
             Recommended_Trail__c.Description__c, 'Updated description.'
@@ -217,13 +211,13 @@ private class RecommendedBadgeTrailTriggerHelper_Tests {
 
     @isTest
     private static void it_should_update_urls_for_updated_records() {
-        Map<Id, sObject> oldTestBadges = new Map<Id, sObject>(new RecommendedBadgeTS(new Map<String, Object>()).generate());
+        Map<Id, sObject> oldTestBadges = new Map<Id, sObject>(new RecommendedBadgeTS().generate());
         List<Recommended_Badge__c> updatedTestBadges = (List<Recommended_Badge__c>) oldTestBadges.values().deepClone(true);
         for(Recommended_Badge__c badge : updatedTestBadges) {
             badge.URL__c = RecommendedBadgeTrailTriggerHelper.TRAILHEAD_URL_MAPPINGS.get(badge.Type__c).defaultPath + '/' + badge.BadgeAPIName__c;
         }
 
-        Map<Id, sObject> oldTestTrails = new Map<Id, sObject>(new RecommendedTrailTS(new Map<String, Object>()).generate());
+        Map<Id, sObject> oldTestTrails = new Map<Id, sObject>(new RecommendedTrailTS().generate());
         List<Recommended_Trail__c> updatedTestTrails = (List<Recommended_Trail__c>) oldTestTrails.values().deepClone(true);
         String defaultTrailPath = RecommendedBadgeTrailTriggerHelper.TRAILHEAD_URL_MAPPINGS.get('Trail').defaultPath;
         for(Recommended_Trail__c trail : updatedTestTrails) {

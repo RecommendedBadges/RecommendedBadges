@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>OfficialExamGuide__c</fullName>
+    <deprecated>false</deprecated>
     <description>URL to official certification exam guide on Trailhead. Only applicable for exam badge mixes.</description>
     <label>Official Exam Guide</label>
     <required>false</required>

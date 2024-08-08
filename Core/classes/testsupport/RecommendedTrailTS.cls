@@ -1,13 +1,35 @@
 @isTest
 public class RecommendedTrailTS extends TestSupport.DataGeneration {
     public MixCategoryTS mixCategoryGenerator;
+    
+    /**
+     * No arg constructor
+     */    
+    public RecommendedTrailTS() {
+        this(new Map<String, Object>(), new List<TestSupport.TestDataField>());
+    }
 
-    @SuppressWarnings('PMD.ApexDoc')
+    /**
+     * Constructor with configuration options
+     * @param options 
+     */    
     public RecommendedTrailTS(Map<String, Object> options) {
         this(options, new List<TestSupport.TestDataField>());
     }
 
-    @SuppressWarnings('PMD.ApexDoc')
+    /**
+     * Constructor with custom field specs
+     * @param fieldSpecs 
+     */    
+    public RecommendedTrailTS(List<TestSupport.TestDataField> fieldSpecs) {
+        this(new Map<String, Object>(), fieldSpecs);
+    }
+
+    /**
+     * Constructor with configuration options and custom field specs
+     * @param options 
+     * @param fieldSpecs 
+     */    
     public RecommendedTrailTS(Map<String, Object> options, List<TestSupport.TestDataField> fieldSpecs) {
         super(options, fieldSpecs);
         this.S_OBJECT_TYPE = 'Recommended_Trail__c';

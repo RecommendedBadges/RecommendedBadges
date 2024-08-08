@@ -3,5 +3,5 @@
     <fullName>Standard</fullName>
     <active>true</active>
     <description>Record type for badge mixes that aren&apos;t certification exam-specific.</description>
-    <label>Standard</label>
+    <label>Standard Mix</label>
 </RecordType>
