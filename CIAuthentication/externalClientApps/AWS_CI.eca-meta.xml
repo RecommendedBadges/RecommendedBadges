@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalClientApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>blearn5241@gmail.com</contactEmail>
+    <description>Used to authorize AWS durable lambda function for packaging.</description>
+    <distributionState>Packaged</distributionState>
+    <isProtected>false</isProtected>
+    <label>AWS CI</label>
+    <orgScopedExternalApp>00D8c000005JlFQ:AWS_CI</orgScopedExternalApp>
+</ExternalClientApplication>
