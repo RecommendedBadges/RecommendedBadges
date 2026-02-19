@@ -40,7 +40,7 @@
       "package": "Core",
       "versionName": "Akron",
       "versionNumber": "2.24.0.NEXT",
-      "default": true,
+      "default": false,
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
