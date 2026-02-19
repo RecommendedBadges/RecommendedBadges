@@ -4,7 +4,10 @@ const exec = util.promisify(require('child_process').exec);
 
 async function createScratchOrg() {
     try {
-        ({stdout, stderr} = await exec(`sf org create scratch -f ${process.env.SCRATCH_ORG_DEFINITION_FILE} -v ${process.env.HUB_ALIAS} -d -a ${process.env.TEST_ORG_ALIAS} --no-track-source -w ${process.env.WAIT_TIME} -y 1`));
+        ({stdout, stderr} = await exec(
+            `sf org create scratch -f ${process.env.SCRATCH_ORG_DEFINITION_FILE} -v ${process.env.HUB_ALIAS} -d -a ${process.env.TEST_ORG_ALIAS} --no-track-source -w ${process.env.WAIT_TIME} -y 1`,
+            { maxBuffer: 1024 * 5000 }
+        ));
 
         if(stdout) {
             process.stdout.write(`Created scratch org: ${stdout}`);
