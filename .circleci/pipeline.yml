@@ -1,6 +1,9 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@5.4.1
+
 parameters:
   create-packages:
     type: boolean
@@ -30,6 +33,9 @@ jobs:
     - UNPACKAGED_DIRECTORY: unpackageable
     - WAIT_TIME: 30
     steps:
+      - aws-cli/setup:
+          role_arn: "${AWS_ROLE_ARN}"
+          role_session_name: "${AWS_ROLE_SESSION_NAME}"
       - checkout
       - run:
           name: Install GH CLI
@@ -144,6 +150,9 @@ jobs:
                 - equal: [ true, << pipeline.parameters.create-packages >> ]
                 - $CIRCLE_PULL_REQUEST
             steps:
+              - aws-cli/setup:
+                  role_arn: "${AWS_ROLE_ARN}"
+                  role_session_name: "${AWS_ROLE_SESSION_NAME}"
               - run:
                   name: Make Request to Packaging App
                   command: |
