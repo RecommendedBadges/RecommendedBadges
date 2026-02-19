@@ -175,7 +175,6 @@
   "name": "RecommendedBadges",
   "namespace": "",
   "sfdcLoginUrl": "https://recommendedbadges-dev-ed.my.salesforce.com",
-  "sourceApiVersion": "61.0",
   "packageAliases": {
     "ApexMockery": "04tDn0000006nbAIAQ",
     "NebulaLogger": "04t5Y0000027L98QAE",
