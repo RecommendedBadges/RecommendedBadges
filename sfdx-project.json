@@ -1,6 +1,14 @@
 {
   "packageDirectories": [
     {
+      "versionName": "Moraine",
+      "versionNumber": "1.0.0.NEXT",
+      "path": "CIAuthentication",
+      "default": true,
+      "package": "CIAuthentication",
+      "versionDescription": "Package containing external client apps for authentication during CI jobs."
+    },
+    {
       "path": "fflib",
       "default": false,
       "package": "fflib",
@@ -175,6 +183,7 @@
     "StorageLimits": "04t8c000000vGr4AAE",
     "TestSupport": "04t8c000000vH2MAAU",
     "TriggerHandler": "04t8b000000jtsMAAQ",
+    "CIAuthentication": "0Hog70000000GO9CAM",
     "Core": "0Ho8c000000fxx5CAA",
     "LWCUtils": "0Ho8c000000fy64CAA",
     "Triggers": "0Ho8c000000fy69CAA",
@@ -194,6 +203,7 @@
     "RecommendedArticles@1.6.0-1": "04t8c000000vH3FAAU",
     "RecommendedBadgeMix@1.36.0-1": "04t8c000000vH3KAAU",
     "PrivateMixView@1.33.0-1": "04t8c000000vH3PAAU",
-    "UserInterface@1.35.0-1": "04t8c000000vH3UAAU"
+    "UserInterface@1.35.0-1": "04t8c000000vH3UAAU",
+    "CIAuthentication@1.0.0-1": "04tg70000000qHxAAI"
   }
 }

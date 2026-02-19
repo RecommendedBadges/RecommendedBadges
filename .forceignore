@@ -58,16 +58,17 @@ package.xml
 #**Home_Page_Default.flexipage**
 
 # Ignored Packages
-#Core
+#CIAuthorization
+Core
 fflib
 LWCErrorHandler
 LWCUtils
 PrivateMixView
-#RecommendedArticles
+RecommendedArticles
 RecommendedBadgeMix
 SortCustomMetadata
-#Triggers
-#UserInterface
+Triggers
+UserInterface
 
 # Ignored Folders
 unpackageable
