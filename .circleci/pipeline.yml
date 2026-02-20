@@ -45,17 +45,15 @@ jobs:
             && sudo apt update \
             && sudo apt install gh -y
             echo $GH_ACCESS_TOKEN | gh auth login --with-token
-      #- run:
-       #   name: Decrypt Server Key
-        #  command: |
-         #   openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
+      - run:
+          name: Decrypt Server Key
+          command: |
+            openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
       - sfdx/install
       - sfdx/auth:
           defaultusername: HUB_USER_NAME
           consumerKey: HUB_CONSUMER_KEY
-          decryption_key: DECRYPTION_KEY
-          decryption_iv: DECRYPTION_IV
-          server_key: assets/server.key.enc
+          server_key: assets/server.key
       # #- run:
       #     name: Create SFDX Folder
       #     command: |
