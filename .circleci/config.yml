@@ -54,6 +54,7 @@ jobs:
             defaultusername: HUB_USER_NAME
             consumerKey: HUB_CONSUMER_KEY
             jwtKey: SFDX_JWT_KEY
+            instanceUrl: https://login.salesforce.com
         - when:
             condition:
               not: 
