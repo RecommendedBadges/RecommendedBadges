@@ -3,6 +3,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@5.4.1
+  sfdx: circleci/salesforce-sfdx@3.0.3
 
 parameters:
   create-packages:
@@ -45,121 +46,124 @@ jobs:
             && sudo apt install gh -y
             echo $GH_ACCESS_TOKEN | gh auth login --with-token
       - run:
-          name: Create SFDX Folder
-          command: |
-            # Create sfdx directory
-            mkdir ~/sfdx
-            # Download Salesforce CLI
-            #wget -qO- ${DX_CLI_URL_CUSTOM-$DX_CLI_URL} | tar xJ -C ~/sfdx --strip-components 1
-            npm install @salesforce/cli --global
-      - run:
-          name: Install Salesforce CLI
-          command: |
-            export PATH=~/sfdx/bin:$PATH
-            echo "export PATH=~/sfdx/bin:$PATH" >> $BASH_ENV
-            sf
-      - run:
           name: Decrypt Server Key
           command: |
             openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
-      - run:
-          name: Authorize Dev Hub
-          command: |
-            sf org login jwt -i $HUB_CONSUMER_KEY -f assets/server.key -o $HUB_USER_NAME -d -a $HUB_ALIAS
-      - when:
-          condition:
-            and:
-              - equal: [ true, << pipeline.parameters.create-packages >> ]
-              - $CIRCLE_PULL_REQUEST
-          steps:
-            - run:
-                name: Get Packages to Update
-                command: |
-                  mkdir /tmp/artifacts
-                  touch /tmp/artifacts/packagesToUpdate.txt
-                  npm run getSortedPackagesToUpdate
-            - store_artifacts:
-                path: /tmp/artifacts
-            - run:
-                name: Create Package Versions Skipping Validation
-                command: |
-                  npm run --silent updateForceIgnore
-                  packagesToUpdate=()
-                  packagesToUpdate+=$( (npm run --silent getSortedPackagesToUpdate) )
-                  echo $packagesToUpdate
-                  for packageToUpdate in ${packagesToUpdate[@]};
-                      do sf package version create -p $packageToUpdate -x -w $WAIT_TIME --skip-validation
-                  done
-      - run:
-          name: Create Scratch Org for Running Tests
-          command: |
-            if [[  << pipeline.parameters.remaining-scratch-orgs >> -lt $REQUIRED_SCRATCH_ORGS ]]
-            then
-              exit 1
-            else
-              npm run --silent createScratchOrg
-            fi
-      - run: 
-          name: Install External Dependencies in Scratch Org
-          command: |
-            packagesToInstall=()
-            packagesToInstall+=$( (npm run --silent getDependenciesBeforeTesting) )
-            echo $packagesToInstall
-            for packageToInstall in ${packagesToInstall[@]};
-                do sf package install --skip-handlers FeatureEnforcement -p $packageToInstall -o $TEST_ORG_ALIAS -r -w $WAIT_TIME
-            done
-      - when:
-            condition:
-              equal: [ false, << pipeline.parameters.create-packages >> ]
-            steps:
-              - run:
-                  name: Push Source to Scratch Org
-                  command: |
-                    npm run --silent updateForceIgnore
-                    sf project deploy start -o $TEST_ORG_ALIAS
-      - when:
-            condition:
-              and:
-                - equal: [ true, << pipeline.parameters.create-packages >> ]
-                - $CIRCLE_PULL_REQUEST
-            steps:
-              - run:
-                  name: Install Packages in Scratch Org
-                  command: |
-                    packagesToInstall=()
-                    packagesToInstall+=$( (npm run --silent getSortedPackagesToInstall) )
-                    for packageToInstall in ${packagesToInstall[@]};
-                      do sf package install --skip-handlers FeatureEnforcement -p $packageToInstall -o $TEST_ORG_ALIAS -r -w $WAIT_TIME
-                    done
-      - run:
-          name: Run Tests in Scratch Org
-          command: |
-            mkdir -p /tmp/artifacts
-            sf apex run test -s Core -s fflib -s LWCErrorHandler -s PrivateMixView -s RecommendedBadgeMix -s SortCustomMetadata -s StorageManagement -s Triggers -o $TEST_ORG_ALIAS -c -d /tmp/artifacts -r json
-            sf apex run test -s RecommendedArticles -o $TEST_ORG_ALIAS -c -d /tmp/artifacts -r json
-      - store_artifacts:
-          path: /tmp/artifacts
-      - run:
-          name: Delete Testing Scratch Org
-          command: sf org delete scratch -o $TEST_ORG_ALIAS -p
-      - when:
-            condition:
-              and:
-                - equal: [ true, << pipeline.parameters.create-packages >> ]
-                - $CIRCLE_PULL_REQUEST
-            steps:
-              - aws-cli/setup:
-                  role_arn: "${AWS_ROLE_ARN}"
-                  role_session_name: "${AWS_ROLE_SESSION_NAME}"
-              - run:
-                  name: Make Request to Packaging App
-                  command: |
-                    npm install axios
-                    npm run --silent postToPackagingApp
+      - sfdx/install
+      - sfdx/auth:
+          defaultusername: $HUB_USER_NAME
+          consumerKey: $HUB_CONSUMER_KEY
+          server_key: assets/server.key
+      # - run:
+      #     name: Create SFDX Folder
+      #     command: |
+      #       # Create sfdx directory
+      #       mkdir ~/sfdx
+      #       # Download Salesforce CLI
+      #       #wget -qO- ${DX_CLI_URL_CUSTOM-$DX_CLI_URL} | tar xJ -C ~/sfdx --strip-components 1
+      #       npm install @salesforce/cli --global
+      #- run:
+          #name: Install Salesforce CLI
+          #command: |
+            #export PATH=~/sfdx/bin:$PATH
+           # echo "export PATH=~/sfdx/bin:$PATH" >> $BASH_ENV
+          #  sf
+      #- run:
+       #   name: Authorize Dev Hub
+        #  command: |
+         #   sf org login jwt -i $HUB_CONSUMER_KEY -f assets/server.key -o $HUB_USER_NAME -d -a $HUB_ALIAS
+#       - when:
+#           condition:
+#             and:
+#               - equal: [ true, << pipeline.parameters.create-packages >> ]
+#               - $CIRCLE_PULL_REQUEST
+#           steps:
+#             - run:
+#                 name: Get Packages to Update
+#                 command: |
+#                   mkdir /tmp/artifacts
+#                   touch /tmp/artifacts/packagesToUpdate.txt
+#                   npm run getSortedPackagesToUpdate
+#             - store_artifacts:
+#                 path: /tmp/artifacts
+#             - run:
+#                 name: Create Package Versions Skipping Validation
+#                 command: |
+#                   npm run --silent updateForceIgnore
+#                   packagesToUpdate=()
+#                   packagesToUpdate+=$( (npm run --silent getSortedPackagesToUpdate) )
+#                   echo $packagesToUpdate
+#                   for packageToUpdate in ${packagesToUpdate[@]};
+#                       do sf package version create -p $packageToUpdate -x -w $WAIT_TIME --skip-validation
+#                   done
+#       - run:
+#           name: Create Scratch Org for Running Tests
+#           command: |
+#             if [[  << pipeline.parameters.remaining-scratch-orgs >> -lt $REQUIRED_SCRATCH_ORGS ]]
+#             then
+#               exit 1
+#             else
+#               npm run --silent createScratchOrg
+#             fi
+#       - run: 
+#           name: Install External Dependencies in Scratch Org
+#           command: |
+#             packagesToInstall=()
+#             packagesToInstall+=$( (npm run --silent getDependenciesBeforeTesting) )
+#             echo $packagesToInstall
+#             for packageToInstall in ${packagesToInstall[@]};
+#                 do sf package install --skip-handlers FeatureEnforcement -p $packageToInstall -o $TEST_ORG_ALIAS -r -w $WAIT_TIME
+#             done
+#       - when:
+#             condition:
+#               equal: [ false, << pipeline.parameters.create-packages >> ]
+#             steps:
+#               - run:
+#                   name: Push Source to Scratch Org
+#                   command: |
+#                     npm run --silent updateForceIgnore
+#                     sf project deploy start -o $TEST_ORG_ALIAS
+#       - when:
+#             condition:
+#               and:
+#                 - equal: [ true, << pipeline.parameters.create-packages >> ]
+#                 - $CIRCLE_PULL_REQUEST
+#             steps:
+#               - run:
+#                   name: Install Packages in Scratch Org
+#                   command: |
+#                     packagesToInstall=()
+#                     packagesToInstall+=$( (npm run --silent getSortedPackagesToInstall) )
+#                     for packageToInstall in ${packagesToInstall[@]};
+#                       do sf package install --skip-handlers FeatureEnforcement -p $packageToInstall -o $TEST_ORG_ALIAS -r -w $WAIT_TIME
+#                     done
+#       - run:
+#           name: Run Tests in Scratch Org
+#           command: |
+#             mkdir -p /tmp/artifacts
+#             sf apex run test -s Core -s fflib -s LWCErrorHandler -s PrivateMixView -s RecommendedBadgeMix -s SortCustomMetadata -s StorageManagement -s Triggers -o $TEST_ORG_ALIAS -c -d /tmp/artifacts -r json
+#             sf apex run test -s RecommendedArticles -o $TEST_ORG_ALIAS -c -d /tmp/artifacts -r json
+#       - store_artifacts:
+#           path: /tmp/artifacts
+#       - run:
+#           name: Delete Testing Scratch Org
+#           command: sf org delete scratch -o $TEST_ORG_ALIAS -p
+#       - when:
+#             condition:
+#               and:
+#                 - equal: [ true, << pipeline.parameters.create-packages >> ]
+#                 - $CIRCLE_PULL_REQUEST
+#             steps:
+#               - aws-cli/setup:
+#                   role_arn: "${AWS_ROLE_ARN}"
+#                   role_session_name: "${AWS_ROLE_SESSION_NAME}"
+#               - run:
+#                   name: Make Request to Packaging App
+#                   command: |
+#                     npm install axios
+#                     npm run --silent postToPackagingApp
 
-workflows:
-  build:
-    jobs:
-      - build
-
-# VS Code Extension Version: 1.5.1
+# workflows:
+#   build:
+#     jobs:
+#       - build
