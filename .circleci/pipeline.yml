@@ -50,7 +50,8 @@ jobs:
             # Create sfdx directory
             mkdir ~/sfdx
             # Download Salesforce CLI
-            wget -qO- ${DX_CLI_URL_CUSTOM-$DX_CLI_URL} | tar xJ -C ~/sfdx --strip-components 1
+            #wget -qO- ${DX_CLI_URL_CUSTOM-$DX_CLI_URL} | tar xJ -C ~/sfdx --strip-components 1
+            npm install @salesforce/cli --global
       - run:
           name: Install Salesforce CLI
           command: |
