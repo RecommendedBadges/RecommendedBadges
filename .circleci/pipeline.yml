@@ -27,7 +27,7 @@ jobs:
     - DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
     - HUB_ALIAS: HubOrg
     - REQUIRED_SCRATCH_ORGS: 1
-    - SCRATCH_ORG_DEFINITION_FILE: config/snapshot-scratch-def.json
+    - SCRATCH_ORG_DEFINITION_FILE: config/barebones-scratch-def.json
     - TEST_LEVEL: RunLocalTests
     - TEST_ORG_ALIAS: TestOrg
     - UNPACKAGED_DIRECTORY: unpackageable
