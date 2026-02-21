@@ -27,28 +27,6 @@ jobs:
               && sudo apt update \
               && sudo apt install gh -y
               echo $GH_ACCESS_TOKEN | gh auth login --with-token
-        # - run:
-        #     name: Create SFDX Folder
-        #     command: |
-        #       # Create sfdx directory
-        #       mkdir ~/sfdx
-        #       # Download Salesforce CLI
-        #       wget -qO- ${DX_CLI_URL_CUSTOM-$DX_CLI_URL} | tar xJ -C ~/sfdx --strip-components 1
-        # - run:
-        #     name: Install CLI
-        #     command: |
-        #       # Install the CLI
-        #       export PATH=~/sfdx/bin:$PATH
-        #       echo "export PATH=~/sfdx/bin:$PATH" >> $BASH_ENV
-        #       sf
-        # - run:
-        #     name: Decrypt Server Key
-        #     command: |
-        #       openssl enc -aes-256-cbc -md sha256 -salt -d -in assets/server.key.enc -out server.key -K $DECRYPTION_KEY -pbkdf2 
-        # - run:
-        #     name: Authorize Dev Hub
-        #     command: |
-        #       sf org login jwt -i $HUB_CONSUMER_KEY -f assets/server.key -o $HUB_USER_NAME -d -a $HUB_ALIAS
         - sfdx/install
         - sfdx/auth:
             defaultusername: blearn5241@wise-impala-ijbwfx.com
@@ -79,5 +57,3 @@ workflows:
           - equal: [ main, << pipeline.git.branch >> ]
     jobs:
       - setup
-
-# VS Code Extension Version: 1.5.1
