@@ -51,7 +51,7 @@ jobs:
          #   openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
       - sfdx/install
       - sfdx/auth:
-          defaultusername: HUB_USER_NAME
+          defaultusername: blearn5241@wise-impala-ijbwfx.com
           consumerKey: HUB_CONSUMER_KEY
           jwtKey: SFDX_JWT_KEY
           instanceUrl: https://recommendedbadges-dev-ed.my.salesforce.com
