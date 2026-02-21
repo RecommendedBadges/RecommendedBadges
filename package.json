@@ -19,7 +19,8 @@
     "getDependenciesBeforeTesting": "node -e 'require(\"./node-scripts/getDependenciesBeforeTesting.js\").getDependenciesBeforeTesting()'",
     "getSortedPackagesToInstall": "node -e 'require(\"./node-scripts/getSortedPackagesToInstall.js\").getSortedPackagesToInstall()'",
     "postToPackagingApp": "node -e 'require(\"./node-scripts/postToPackagingApp.js\").postToPackagingApp()'",
-    "updateForceIgnore": "node -e 'require(\"./node-scripts/updateForceIgnore.js\").updateForceIgnore()'"
+    "updateForceIgnore": "node -e 'require(\"./node-scripts/updateForceIgnore.js\").updateForceIgnore()'",
+    "getPackagesToUpdate": "node -e 'require(\"./testing.js\").getPackagesToUpdate()'"
   },
   "devDependencies": {
     "@lwc/eslint-plugin-lwc": "^1.0.1",
