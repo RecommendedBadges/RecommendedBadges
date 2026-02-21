@@ -77,8 +77,9 @@ jobs:
                       do sf package version create -p $packageToUpdate -x -w $WAIT_TIME --skip-validation
                   done
       - sfdx/scratch_create:
-          scratch_config: config/barebones-scratch-def.json
           scratch_alias: TestOrg
+          scratch_config: config/barebones-scratch-def.json
+          overrides: '--no-track-source -y 1'
       - run:
           name: Install External Dependencies in Scratch Org
           command: |
