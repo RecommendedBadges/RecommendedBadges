@@ -42,6 +42,7 @@ async function getPackagesToUpdate(changedPackageDirectories) {
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
         if(packageDirectory.dependencies) {
             for(let dependentPackage of packageDirectory.dependencies) {
+                process.stdout.write(`dependentPackage: ${JSON.stringify(dependentPackage)}\n`);
                 let packageName = await getPackageNameFromDependency(dependentPackage);
                 if(packageName && packagesToUpdate.has(packageName)) {
                     packagesToUpdate.add(packageDirectory.package);
@@ -58,7 +59,8 @@ async function getSortedPackagesToUpdate() {
     let packagesToUpdate = await getPackagesToUpdate(changedPackageDirectories);
     let sortedPackagesToUpdate = await sortPackages(packagesToUpdate, PACKAGE_DIRECTORIES);
     process.stdout.write(sortedPackagesToUpdate.join(' '));
-    fs.writeFileSync(OUTPUT_FILENAME, sortedPackagesToUpdate.join('\n'))
+    fs.writeFileSync(OUTPUT_FILENAME, sortedPackagesToUpdate.join('\n'));
+    process.exit(1);
 }
 
 module.exports.getSortedPackagesToUpdate = getSortedPackagesToUpdate;
