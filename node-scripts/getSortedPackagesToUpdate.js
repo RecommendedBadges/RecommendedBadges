@@ -41,6 +41,10 @@ async function getPackagesToUpdate(changedPackageDirectories) {
 
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
         process.stdout.write(`packageDirectory versionNumber: ${packageDirectory.versionNumber}\n`);
+        let versionNumber = packageDirectory.versionNumber.replace('NEXT', '1');
+        let splitVersionNumber = versionNumber.split('.');
+        let newVersion = `${splitVersionNumber[0]}.${splitVersionNumber[1] + 1}.${splitVersionNumber[2]}.1`;
+        process.stdout.write(`packageDirectory newVersion: ${newVersion}\n`);
         if(packageDirectory.dependencies) {
             for(let dependentPackage of packageDirectory.dependencies) {
                 process.stdout.write(`dependentPackage: ${JSON.stringify(dependentPackage)}\n`);
