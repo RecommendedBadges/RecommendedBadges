@@ -79,7 +79,7 @@ jobs:
       - sfdx/scratch_create:
           scratch_alias: TestOrg
           scratch_config: config/barebones-scratch-def.json
-          overrides: -y 1
+          overrides: -y 1 -w 30
       - run:
           name: Install External Dependencies in Scratch Org
           command: |
