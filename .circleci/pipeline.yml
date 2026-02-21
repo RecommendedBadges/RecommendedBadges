@@ -79,15 +79,7 @@ jobs:
       - sfdx/scratch_create:
           scratch_config: config/barebones-scratch-def.json
           scratch_alias: TestOrg
-#           name: Create Scratch Org for Running Tests
-#           command: |
-#             if [[  << pipeline.parameters.remaining-scratch-orgs >> -lt $REQUIRED_SCRATCH_ORGS ]]
-#             then
-#               exit 1
-#             else
-#               npm run --silent createScratchOrg
-#             fi
-      - run: 
+      - run:
           name: Install External Dependencies in Scratch Org
           command: |
             packagesToInstall=()
