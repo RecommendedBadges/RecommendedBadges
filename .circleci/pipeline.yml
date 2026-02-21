@@ -52,6 +52,7 @@ jobs:
       - sfdx/install
       - sfdx/auth:
           defaultusername: blearn5241@wise-impala-ijbwfx.com
+          defaultdevhubusername: HubOrg
           consumerKey: HUB_CONSUMER_KEY
           jwtKey: SFDX_JWT_KEY
           instanceUrl: https://recommendedbadges-dev-ed.my.salesforce.com
