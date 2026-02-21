@@ -120,6 +120,8 @@ jobs:
             sf apex run test -s RecommendedArticles -o $TEST_ORG_ALIAS -c -d /tmp/artifacts -r json
       - store_artifacts:
           path: /tmp/artifacts
+      - sfdx/scratch_delete:
+          scratch_alias: TestOrg
       - run:
           name: Delete Testing Scratch Org
           command: sf org delete scratch -o $TEST_ORG_ALIAS -p
