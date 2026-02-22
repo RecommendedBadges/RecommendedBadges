@@ -73,8 +73,14 @@ jobs:
                   packagesToUpdate=()
                   packagesToUpdate+=$( (npm run --silent getSortedPackagesToUpdate) )
                   echo $packagesToUpdate
+                  declare -A newVersionNumbersByPackage
+                  jsonNewVersionNumbersByPackage=$(npm run  --silent getNewVersionNumbersForPackages -- packagesToUpdate="${packagesToUpdate[@]}")
+                  for key in $(echo "$jsonNewVersionNumbersByPackage" | jq -r 'keys[]'); do
+                    value=$(echo "$jsonNewVersionNumbersByPackage" | jq -r --arg k "$key" '.[$k]')
+                    newVersionNumbersByPackage["$key"]=$value
+                  done
                   for packageToUpdate in ${packagesToUpdate[@]};
-                      do sf package version create -p $packageToUpdate -x -w $WAIT_TIME --skip-validation
+                      do sf package version create -p $packageToUpdate -x -w $WAIT_TIME -n ${newVersionNumbersByPackage[$packageToUpdate]} --skip-validation
                   done
       - sfdx/scratch_create:
           scratch_alias: TestOrg
@@ -134,8 +140,8 @@ jobs:
               - run:
                   name: Make Request to Packaging App
                   command: |
-                    npm install axios
-                    npm run --silent postToPackagingApp
+                    #npm install axios
+                    #npm run --silent postToPackagingApp
 
 workflows:
   build:

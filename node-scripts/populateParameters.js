@@ -1,13 +1,12 @@
 #!/bin/env node
 
-const fs = require('fs');
-
-const getLimits = require('./getLimits.js');
-const getPackageToggle = require('./getPackageToggle.js');
+import fs from 'node:fs';
+import getLimits from './getLimits.js';
+import getPackageToggle from './getPackageToggle.js';
 
 const OUTPUT_FILENAME = 'parameters.json';
 
-async function populateParameters() {
+export async function populateParameters() {
     let parameters = await getLimits();
     parameters["create-packages"] = await getPackageToggle();
     fs.writeFileSync(OUTPUT_FILENAME, JSON.stringify(parameters));

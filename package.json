@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Salesforce App",
+  "type": "module",
   "scripts": {
     "lint": "eslint **/{aura,lwc}/**",
     "test": "npm run test:unit",
@@ -20,7 +21,7 @@
     "getSortedPackagesToInstall": "node -e 'require(\"./node-scripts/getSortedPackagesToInstall.js\").getSortedPackagesToInstall()'",
     "postToPackagingApp": "node -e 'require(\"./node-scripts/postToPackagingApp.js\").postToPackagingApp()'",
     "updateForceIgnore": "node -e 'require(\"./node-scripts/updateForceIgnore.js\").updateForceIgnore()'",
-    "getPackagesToUpdate": "node -e 'require(\"./testing.js\").getPackagesToUpdate()'"
+    "getNewVersionNumbersForPackages": "node ./node-scripts/getNewVersionNumbersForPackages.js"
   },
   "devDependencies": {
     "@lwc/eslint-plugin-lwc": "^1.0.1",

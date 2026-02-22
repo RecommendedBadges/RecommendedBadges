@@ -1,12 +1,11 @@
 #!/bin/env node
 
-const fs = require('fs');
-
-const { PACKAGE_DIRECTORIES } = require('./constants.js');
+import fs from 'node:fs';
+import { PACKAGE_DIRECTORIES } from './constants.js';
 
 const FORCE_IGNORE_FILENAME = '.forceignore';
 
-function updateForceIgnore() {
+export function updateForceIgnore() {
     let sourceDirectories = [];
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
         sourceDirectories.push(packageDirectory.path);

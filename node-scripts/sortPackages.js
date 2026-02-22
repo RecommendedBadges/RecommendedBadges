@@ -1,8 +1,8 @@
 #!/bin/env node
 
-const getPackageNameFromDependency = require('./getPackageNameFromDependency.js');
+import getPackageNameFromDependency from './getPackageNameFromDependency.js';
 
-async function sortPackages(packages, PACKAGE_DIRECTORIES) {
+export async function sortPackages(packages, PACKAGE_DIRECTORIES) {
     let packagesWithDependencies = {};
 
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
@@ -26,15 +26,15 @@ async function sortPackages(packages, PACKAGE_DIRECTORIES) {
     while(rootNodes.length) {
         sortedPackages.push(...rootNodes);
         let newRootNodes = [];
-        for(let package in packagesWithDependencies) {
-                if(rootNodes.includes(package)) {
-                    delete packagesWithDependencies[package];
+        for(let p in packagesWithDependencies) {
+                if(rootNodes.includes(p)) {
+                    delete packagesWithDependencies[p];
                 } else {
-                    packagesWithDependencies[package] = packagesWithDependencies[package].filter(element => {
+                    packagesWithDependencies[p] = packagesWithDependencies[p].filter(element => {
                     return !rootNodes.includes(element);
                 });
-                if(!packagesWithDependencies[package].length) {
-                    newRootNodes.push(package);
+                if(!packagesWithDependencies[p].length) {
+                    newRootNodes.push(p);
                 }
             }
         }

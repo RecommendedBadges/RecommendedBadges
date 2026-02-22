@@ -1,13 +1,13 @@
 #!/bin/env node
 
-const util = require('util');
+import util from 'util';
 const exec = util.promisify(require('child_process').exec);
 
 const SCRATCH_ORG_LIMIT = 'DailyScratchOrgs';
 const PACKAGE_VERSION_LIMIT = 'Package2VersionCreates';
 const PACKAGE_VERSION_NO_VALIDATION_LIMIT = 'Package2VersionCreatesWithoutValidation';
 
-async function getLimits() {
+export async function getLimits() {
     try {
         const {stdout, stderr} = await exec(`sf org list limits -o ${process.env.HUB_ALIAS} --json`);
         if(stderr) {

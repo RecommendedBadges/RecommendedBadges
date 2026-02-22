@@ -1,13 +1,13 @@
 #!/bin/env node
 
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+import { promisify } from 'node:util';
+import child_process from 'node:child_process';
+const exec = promisify(child_process.exec);
+import { ensurePackageIdsInPackageAliases } from './ensurePackageIdsInPackageAliases.js';
+import { sortPackages } from './sortPackages.js';
+import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 
-const ensurePackageIdsInPackageAliases = require('./ensurePackageIdsInPackageAliases.js');
-const sortPackages = require('./sortPackages.js');
-const {HUB_ALIAS, PACKAGE_DIRECTORIES} = require('./constants.js');
-
-async function getLatestPackageVersionIds() {
+export async function getLatestPackageVersionIds() {
     let latestPackageVersionIds = {};
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
         if(packageDirectory.package) {
@@ -30,8 +30,8 @@ async function getSortedPackagesToInstall() {
     let latestPackageVersionIds = await getLatestPackageVersionIds();
 
     let packages = new Set();
-    for(let package in latestPackageVersionIds) {
-        packages.add(package);
+    for(let packageId in latestPackageVersionIds) {
+        packages.add(packageId);
     }
 
     let sortedPackagesToInstall = await sortPackages(packages, PACKAGE_DIRECTORIES);

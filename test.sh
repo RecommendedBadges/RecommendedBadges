@@ -1,8 +1,10 @@
 #! /bin/bash
 
+packagesToUpdate=('Core' 'Triggers' 'SortCustomMetadata' 'RecommendedArticles' 'RecommendedBadgeMix' 'PrivateMixView' 'UserInterface')
+
 declare -A packageDict
 
-jsonPackages=$(npm run --silent getPackagesToUpdate)
+jsonPackages=$(npm run --silent getPackagesToUpdate -- packagesToUpdate="${packagesToUpdate[@]}")
 echo $jsonPackages
 
 for key in $(echo "$jsonPackages" | jq -r 'keys[]'); do

@@ -1,17 +1,20 @@
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+#!/bin/env node
 
-const sortPackages = require('./sortPackages.js');
-const ensurePackageIdsInPackageAliases = require('./ensurePackageIdsInPackageAliases.js');
-const getPackageNameFromDependency = require('./getPackageNameFromDependency.js');
-const {PACKAGE_DIRECTORIES} = require('./constants.js');
+import { promisify } from 'node:util';
+import child_process from 'node:child_process';
+const exec = promisify(child_process.exec);
+import fs from 'node:fs';
+import { sortPackages } from './sortPackages.js';
+import { ensurePackageIdsInPackageAliases } from './ensurePackageIdsInPackageAliases.js';
+import { getPackageNameFromDependency } from './getPackageNameFromDependency.js';
+import { PACKAGE_DIRECTORIES } from './constants.js';
 
 const OUTPUT_FILENAME = '/tmp/artifacts/packagesToUpdate.txt';
 const BASE_BRANCH = 'main';
 
-async function getChangedPackageDirectories() {
+export async function getChangedPackageDirectories() {
     let changedFiles = [];
-    let changedPackageDirectories = new Set();
+    const changedPackageDirectories = new Set();
     try {
         const {stdout, stderr} = await exec(`git diff origin/${BASE_BRANCH} --name-only`);
         if(stderr) {
@@ -19,7 +22,7 @@ async function getChangedPackageDirectories() {
             process.exit(1);
         }
         changedFiles = stdout.split('\n');
-        for(let changedFile of changedFiles) {
+        for(const changedFile of changedFiles) {
             if(changedFile.indexOf('/') != -1) {
                 changedPackageDirectories.add(changedFile.substring(0, changedFile.indexOf('/')));
             }
@@ -32,23 +35,17 @@ async function getChangedPackageDirectories() {
 }
 
 async function getPackagesToUpdate(changedPackageDirectories) {
-    let packagesToUpdate = new Set();
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
+    const packagesToUpdate = new Set();
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
         if(changedPackageDirectories.has(packageDirectory.path) && packageDirectory.package) {
             packagesToUpdate.add(packageDirectory.package);
         }
     }
 
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
-        process.stdout.write(`packageDirectory versionNumber: ${packageDirectory.versionNumber}\n`);
-        let versionNumber = packageDirectory.versionNumber.replace('NEXT', '1');
-        let splitVersionNumber = versionNumber.split('.');
-        let newVersion = `${splitVersionNumber[0]}.${Number.parseInt(splitVersionNumber[1]) + 1}.${splitVersionNumber[2]}.1`;
-        process.stdout.write(`packageDirectory newVersion: ${newVersion}\n`);
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
         if(packageDirectory.dependencies) {
-            for(let dependentPackage of packageDirectory.dependencies) {
-                process.stdout.write(`dependentPackage: ${JSON.stringify(dependentPackage)}\n`);
-                let packageName = await getPackageNameFromDependency(dependentPackage);
+            for(const dependentPackage of packageDirectory.dependencies) {
+                const packageName = await getPackageNameFromDependency(dependentPackage);
                 if(packageName && packagesToUpdate.has(packageName)) {
                     packagesToUpdate.add(packageDirectory.package);
                 }
@@ -59,10 +56,10 @@ async function getPackagesToUpdate(changedPackageDirectories) {
 }
 
 async function getSortedPackagesToUpdate() {
-    let changedPackageDirectories = await getChangedPackageDirectories();
+    const changedPackageDirectories = await getChangedPackageDirectories();
     await ensurePackageIdsInPackageAliases();
-    let packagesToUpdate = await getPackagesToUpdate(changedPackageDirectories);
-    let sortedPackagesToUpdate = await sortPackages(packagesToUpdate, PACKAGE_DIRECTORIES);
+    const packagesToUpdate = await getPackagesToUpdate(changedPackageDirectories);
+    const sortedPackagesToUpdate = await sortPackages(packagesToUpdate, PACKAGE_DIRECTORIES);
     process.stdout.write(sortedPackagesToUpdate.join(' '));
     fs.writeFileSync(OUTPUT_FILENAME, sortedPackagesToUpdate.join('\n'));
     process.exit(1);
