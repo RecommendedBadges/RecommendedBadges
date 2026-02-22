@@ -1,6 +1,10 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@5.4.1
+  sfdx: circleci/salesforce-sfdx@3.0.3
+
 parameters:
   create-packages:
     type: boolean
@@ -24,7 +28,7 @@ jobs:
     - DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
     - HUB_ALIAS: HubOrg
     - REQUIRED_SCRATCH_ORGS: 1
-    - SCRATCH_ORG_DEFINITION_FILE: config/org-shape-scratch-def.json
+    - SCRATCH_ORG_DEFINITION_FILE: config/barebones-scratch-def.json
     - TEST_LEVEL: RunLocalTests
     - TEST_ORG_ALIAS: TestOrg
     - UNPACKAGED_DIRECTORY: unpackageable
@@ -41,27 +45,13 @@ jobs:
             && sudo apt update \
             && sudo apt install gh -y
             echo $GH_ACCESS_TOKEN | gh auth login --with-token
-      - run:
-          name: Create SFDX Folder
-          command: |
-            # Create sfdx directory
-            mkdir ~/sfdx
-            # Download Salesforce CLI
-            wget -qO- ${DX_CLI_URL_CUSTOM-$DX_CLI_URL} | tar xJ -C ~/sfdx --strip-components 1
-      - run:
-          name: Install Salesforce CLI
-          command: |
-            export PATH=~/sfdx/bin:$PATH
-            echo "export PATH=~/sfdx/bin:$PATH" >> $BASH_ENV
-            sf
-      - run:
-          name: Decrypt Server Key
-          command: |
-            openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K $DECRYPTION_KEY -iv $DECRYPTION_IV
-      - run:
-          name: Authorize Dev Hub
-          command: |
-            sf org login jwt -i $HUB_CONSUMER_KEY -f assets/server.key -o $HUB_USER_NAME -d -a $HUB_ALIAS
+      - sfdx/install
+      - sfdx/auth:
+          defaultusername: blearn5241@wise-impala-ijbwfx.com
+          defaultdevhubusername: HubOrg
+          consumerKey: HUB_CONSUMER_KEY
+          jwtKey: SFDX_JWT_KEY
+          instanceUrl: https://recommendedbadges-dev-ed.my.salesforce.com
       - when:
           condition:
             and:
@@ -83,19 +73,20 @@ jobs:
                   packagesToUpdate=()
                   packagesToUpdate+=$( (npm run --silent getSortedPackagesToUpdate) )
                   echo $packagesToUpdate
-                  for packageToUpdate in ${packagesToUpdate[@]};
-                      do sf package version create -p $packageToUpdate -x -w $WAIT_TIME --skip-validation
+                  declare -A newVersionNumbersByPackage
+                  jsonNewVersionNumbersByPackage=$(npm run  --silent getNewVersionNumbersForPackages -- packagesToUpdate="${packagesToUpdate[@]}")
+                  for key in $(echo "$jsonNewVersionNumbersByPackage" | jq -r 'keys[]'); do
+                    value=$(echo "$jsonNewVersionNumbersByPackage" | jq -r --arg k "$key" '.[$k]')
+                    newVersionNumbersByPackage["$key"]=$value
                   done
+                  for packageToUpdate in ${packagesToUpdate[@]};
+                      do sf package version create -p $packageToUpdate -x -w $WAIT_TIME -n ${newVersionNumbersByPackage[$packageToUpdate]} --skip-validation
+                  done
+      - sfdx/scratch_create:
+          scratch_alias: TestOrg
+          scratch_config: config/barebones-scratch-def.json
+          overrides: -w 30 -y 1
       - run:
-          name: Create Scratch Org for Running Tests
-          command: |
-            if [[  << pipeline.parameters.remaining-scratch-orgs >> -lt $REQUIRED_SCRATCH_ORGS ]]
-            then
-              exit 1
-            else
-              npm run --silent createScratchOrg
-            fi
-      - run: 
           name: Install External Dependencies in Scratch Org
           command: |
             packagesToInstall=()
@@ -135,24 +126,24 @@ jobs:
             sf apex run test -s RecommendedArticles -o $TEST_ORG_ALIAS -c -d /tmp/artifacts -r json
       - store_artifacts:
           path: /tmp/artifacts
-      - run:
-          name: Delete Testing Scratch Org
-          command: sf org delete scratch -o $TEST_ORG_ALIAS -p
+      - sfdx/scratch_delete:
+          scratch_alias: TestOrg
       - when:
             condition:
               and:
                 - equal: [ true, << pipeline.parameters.create-packages >> ]
                 - $CIRCLE_PULL_REQUEST
             steps:
+              - aws-cli/setup:
+                  role_arn: "${AWS_ROLE_ARN}"
+                  role_session_name: "${AWS_ROLE_SESSION_NAME}"
               - run:
                   name: Make Request to Packaging App
                   command: |
-                    npm install axios
-                    npm run --silent postToPackagingApp
+                    #npm install axios
+                    #npm run --silent postToPackagingApp
 
 workflows:
   build:
     jobs:
       - build
-
-# VS Code Extension Version: 1.5.1

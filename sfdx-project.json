@@ -41,13 +41,11 @@
       "versionName": "Akron",
       "versionNumber": "2.24.0.NEXT",
       "default": false,
+      "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "fflib",
           "versionNumber": "1.11.0.LATEST"
-        },
-        {
-          "package": "NebulaLogger"
         },
         {
           "package": "LWCErrorHandler",
@@ -68,27 +66,10 @@
       "package": "Triggers",
       "versionName": "Akron",
       "versionNumber": "2.20.0.NEXT",
+      "calculateTransitiveDependencies": true,
       "dependencies": [
         {
-          "package": "fflib",
-          "versionNumber": "1.11.0.LATEST"
-        },
-        {
-          "package": "NebulaLogger"
-        },
-        {
           "package": "TriggerHandler"
-        },
-        {
-          "package": "TestSupport"
-        },
-        {
-          "package": "LWCErrorHandler",
-          "versionNumber": "1.13.0.LATEST"
-        },
-        {
-          "package": "LWCUtils",
-          "versionNumber": "1.39.0.LATEST"
         },
         {
           "package": "Core",
@@ -102,25 +83,8 @@
       "package": "SortCustomMetadata",
       "versionName": "Akron",
       "versionNumber": "1.29.0.NEXT",
+      "calculateTransitiveDependencies": true,
       "dependencies": [
-        {
-          "package": "NebulaLogger"
-        },
-        {
-          "package": "TestSupport"
-        },
-        {
-          "package": "fflib",
-          "versionNumber": "1.11.0.LATEST"
-        },
-        {
-          "package": "LWCErrorHandler",
-          "versionNumber": "1.13.0.LATEST"
-        },
-        {
-          "package": "LWCUtils",
-          "versionNumber": "1.39.0.LATEST"
-        },
         {
           "package": "Core",
           "versionNumber": "2.24.0.LATEST"
@@ -133,29 +97,8 @@
       "package": "RecommendedBadgeMix",
       "versionName": "Akron",
       "versionNumber": "1.36.0.NEXT",
+      "calculateTransitiveDependencies": true,
       "dependencies": [
-        {
-          "package": "TestSupport"
-        },
-        {
-          "package": "NebulaLogger"
-        },
-        {
-          "package": "fflib",
-          "versionNumber": "1.11.0.LATEST"
-        },
-        {
-          "package": "LWCErrorHandler",
-          "versionNumber": "1.13.0.LATEST"
-        },
-        {
-          "package": "LWCUtils",
-          "versionNumber": "1.39.0.LATEST"
-        },
-        {
-          "package": "Core",
-          "versionNumber": "2.24.0.LATEST"
-        },
         {
           "package": "SortCustomMetadata",
           "versionNumber": "1.29.0.LATEST"
@@ -169,29 +112,8 @@
       "versionNumber": "1.33.0.NEXT",
       "default": false,
       "versionDescription": "Package containing classes, LWCs, and Lightning pages for the private view portion of the Recommended Badges app.",
+      "calculateTransitiveDependencies": true,
       "dependencies": [
-        {
-          "package": "TestSupport"
-        },
-        {
-          "package": "NebulaLogger"
-        },
-        {
-          "package": "fflib",
-          "versionNumber": "1.11.0.LATEST"
-        },
-        {
-          "package": "LWCErrorHandler",
-          "versionNumber": "1.13.0.LATEST"
-        },
-        {
-          "package": "LWCUtils",
-          "versionNumber": "1.39.0.LATEST"
-        },
-        {
-          "package": "Core",
-          "versionNumber": "2.24.0.LATEST"
-        },
         {
           "package": "SortCustomMetadata",
           "versionNumber": "1.29.0.LATEST"
@@ -204,38 +126,13 @@
       "package": "UserInterface",
       "versionName": "Akron",
       "versionNumber": "1.34.0.NEXT",
+      "calculateTransitiveDependencies": true,
       "dependencies": [
-        {
-          "package": "NebulaLogger"
-        },
         {
           "package": "Shortcuts"
         },
         {
           "package": "StorageLimits"
-        },
-        {
-          "package": "TestSupport"
-        },
-        {
-          "package": "fflib",
-          "versionNumber": "1.11.0.LATEST"
-        },
-        {
-          "package": "LWCUtils",
-          "versionNumber": "1.39.0.LATEST"
-        },
-        {
-          "package": "LWCErrorHandler",
-          "versionNumber": "1.13.0.LATEST"
-        },
-        {
-          "package": "Core",
-          "versionNumber": "2.24.0.LATEST"
-        },
-        {
-          "package": "SortCustomMetadata",
-          "versionNumber": "1.29.0.LATEST"
         },
         {
           "package": "PrivateMixView",
@@ -254,25 +151,8 @@
       "default": false,
       "package": "RecommendedArticles",
       "versionDescription": "Package containing classes and LWCs to display Recommended Articles/resources on the Recommended Badges site.",
+      "calculateTransitiveDependencies": true,
       "dependencies": [
-        {
-          "package": "fflib",
-          "versionNumber": "1.11.0.LATEST"
-        },
-        {
-          "package": "NebulaLogger"
-        },
-        {
-          "package": "TestSupport"
-        },
-        {
-          "package": "LWCErrorHandler",
-          "versionNumber": "1.13.0.LATEST"
-        },
-        {
-          "package": "LWCUtils",
-          "versionNumber": "1.39.0.LATEST"
-        },
         {
           "package": "Core",
           "versionNumber": "2.24.0.LATEST"
@@ -295,7 +175,6 @@
   "name": "RecommendedBadges",
   "namespace": "",
   "sfdcLoginUrl": "https://recommendedbadges-dev-ed.my.salesforce.com",
-  "sourceApiVersion": "61.0",
   "packageAliases": {
     "ApexMockery": "04tDn0000006nbAIAQ",
     "NebulaLogger": "04t5Y0000027L98QAE",

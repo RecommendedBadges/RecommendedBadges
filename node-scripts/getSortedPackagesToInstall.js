@@ -1,11 +1,11 @@
 #!/bin/env node
 
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-
-const ensurePackageIdsInPackageAliases = require('./ensurePackageIdsInPackageAliases.js');
-const sortPackages = require('./sortPackages.js');
-const {HUB_ALIAS, PACKAGE_DIRECTORIES} = require('./constants.js');
+import { promisify } from 'node:util';
+import child_process from 'node:child_process';
+const exec = promisify(child_process.exec);
+import ensurePackageIdsInPackageAliases from './ensurePackageIdsInPackageAliases.js';
+import sortPackages from './sortPackages.js';
+import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 
 async function getLatestPackageVersionIds() {
     let latestPackageVersionIds = {};
@@ -30,8 +30,8 @@ async function getSortedPackagesToInstall() {
     let latestPackageVersionIds = await getLatestPackageVersionIds();
 
     let packages = new Set();
-    for(let package in latestPackageVersionIds) {
-        packages.add(package);
+    for(let packageId in latestPackageVersionIds) {
+        packages.add(packageId);
     }
 
     let sortedPackagesToInstall = await sortPackages(packages, PACKAGE_DIRECTORIES);
@@ -42,4 +42,6 @@ async function getSortedPackagesToInstall() {
     process.stdout.write(`${Array.from(sortedPackagesToInstall).join(' ')}`)
 }
 
-module.exports.getSortedPackagesToInstall = getSortedPackagesToInstall;
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    getSortedPackagesToInstall();
+}

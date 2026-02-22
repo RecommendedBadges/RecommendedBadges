@@ -1,8 +1,7 @@
 #!/bin/env node
 
-const fs = require('fs');
-
-const { PACKAGE_DIRECTORIES } = require('./constants.js');
+import fs from 'node:fs';
+import { PACKAGE_DIRECTORIES } from './constants.js';
 
 const FORCE_IGNORE_FILENAME = '.forceignore';
 
@@ -22,4 +21,6 @@ function updateForceIgnore() {
     fs.writeFileSync(FORCE_IGNORE_FILENAME, forceIgnoreLines.join('\n'));
 }
 
-module.exports.updateForceIgnore = updateForceIgnore;
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    updateForceIgnore();
+}

@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Salesforce App",
+  "type": "module",
   "scripts": {
     "lint": "eslint **/{aura,lwc}/**",
     "test": "npm run test:unit",
@@ -13,13 +14,13 @@
     "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "postinstall": "husky install",
-    "createScratchOrg": "node -e 'require(\"./node-scripts/createScratchOrg.js\").createScratchOrg()'",
-    "populateParameters": "node -e 'require(\"./node-scripts/populateParameters.js\").populateParameters()'",
-    "getSortedPackagesToUpdate": "node -e 'require(\"./node-scripts/getSortedPackagesToUpdate.js\").getSortedPackagesToUpdate()'",
-    "getDependenciesBeforeTesting": "node -e 'require(\"./node-scripts/getDependenciesBeforeTesting.js\").getDependenciesBeforeTesting()'",
-    "getSortedPackagesToInstall": "node -e 'require(\"./node-scripts/getSortedPackagesToInstall.js\").getSortedPackagesToInstall()'",
-    "postToPackagingApp": "node -e 'require(\"./node-scripts/postToPackagingApp.js\").postToPackagingApp()'",
-    "updateForceIgnore": "node -e 'require(\"./node-scripts/updateForceIgnore.js\").updateForceIgnore()'"
+    "populateParameters": "node ./node-scripts/populateParameters.js",
+    "getSortedPackagesToUpdate": "node ./node-scripts/getSortedPackagesToUpdate.js",
+    "getDependenciesBeforeTesting": "node ./node-scripts/getDependenciesBeforeTesting.js",
+    "getSortedPackagesToInstall": "node ./node-scripts/getSortedPackagesToInstall.js",
+    "postToPackagingApp": "node ./node-scripts/postToPackagingApp.js",
+    "updateForceIgnore": "node ./node-scripts/updateForceIgnore.js",
+    "getNewVersionNumbersForPackages": "node ./node-scripts/getNewVersionNumbersForPackages.js"
   },
   "devDependencies": {
     "@lwc/eslint-plugin-lwc": "^1.0.1",

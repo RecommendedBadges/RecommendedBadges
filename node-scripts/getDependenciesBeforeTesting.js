@@ -1,10 +1,10 @@
 #!/bin/env node
 
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-
-const ensurePackageIdsInPackageAliases = require('./ensurePackageIdsInPackageAliases.js');
-const {HUB_ALIAS, PACKAGE_ALIASES, PACKAGE_DIRECTORIES, PACKAGE_ID_PREFIX, PACKAGE_VERSION_ID_PREFIX, PROJECT_PACKAGE_NAMES} = require('./constants.js');
+import { promisify } from 'node:util';
+import child_process from 'node:child_process';
+const exec = promisify(child_process.exec);
+import ensurePackageIdsInPackageAliases from './ensurePackageIdsInPackageAliases.js';
+import { HUB_ALIAS, PACKAGE_ALIASES, PACKAGE_DIRECTORIES, PACKAGE_ID_PREFIX, PACKAGE_VERSION_ID_PREFIX, PROJECT_PACKAGE_NAMES } from './constants.js';
 
 async function getDependenciesBeforeTesting() {
     await ensurePackageIdsInPackageAliases();
@@ -13,9 +13,9 @@ async function getDependenciesBeforeTesting() {
     let possibleRequiredPackageVersionIds = new Set();
     let requiredPackageVersionIds = new Set();
 
-    for(let package of PACKAGE_DIRECTORIES) {
-        for(let i in package.dependencies) {
-            let requiredPackage = package.dependencies[i].package;
+    for(let packageDirectory of PACKAGE_DIRECTORIES) {
+        for(let i in packageDirectory.dependencies) {
+            let requiredPackage = packageDirectory.dependencies[i].package;
             if(requiredPackage.startsWith(PACKAGE_VERSION_ID_PREFIX) && !PACKAGE_IDS.includes(requiredPackage)) {
                 possibleRequiredPackageVersionIds.add(requiredPackage);
             } else if(
@@ -25,7 +25,7 @@ async function getDependenciesBeforeTesting() {
                 ) {
                 requiredPackageVersionIds.add(PACKAGE_ALIASES[requiredPackage]);
             } else if(requiredPackage.startsWith(PACKAGE_ID_PREFIX) && !PACKAGE_IDS.includes(requiredPackage)) {
-                requiredPackageVersionIds.add(await getPackageIdFromDependency(package.dependencies[i]));
+                requiredPackageVersionIds.add(await getPackageIdFromDependency(packageDirectory.dependencies[i]));
             }
         }
     }
@@ -79,4 +79,6 @@ async function getPackageIdFromDependency(dependency) {
     return JSON.parse(stdout).result.records[0].SubscriberPackageVersionId;
 }
 
-module.exports.getDependenciesBeforeTesting = getDependenciesBeforeTesting;
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    getDependenciesBeforeTesting();
+}
