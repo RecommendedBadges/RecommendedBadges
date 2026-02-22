@@ -7,7 +7,7 @@ const SCRATCH_ORG_LIMIT = 'DailyScratchOrgs';
 const PACKAGE_VERSION_LIMIT = 'Package2VersionCreates';
 const PACKAGE_VERSION_NO_VALIDATION_LIMIT = 'Package2VersionCreatesWithoutValidation';
 
-export async function getLimits() {
+export default async function getLimits() {
     try {
         const {stdout, stderr} = await exec(`sf org list limits -o ${process.env.HUB_ALIAS} --json`);
         if(stderr) {
@@ -45,5 +45,3 @@ export async function getLimits() {
         process.exit(1);
     }
 }
-
-module.exports = getLimits;

@@ -55,7 +55,7 @@ async function getPackagesToUpdate(changedPackageDirectories) {
     return packagesToUpdate;
 }
 
-async function getSortedPackagesToUpdate() {
+export default async function getSortedPackagesToUpdate() {
     const changedPackageDirectories = await getChangedPackageDirectories();
     await ensurePackageIdsInPackageAliases();
     const packagesToUpdate = await getPackagesToUpdate(changedPackageDirectories);
@@ -64,5 +64,3 @@ async function getSortedPackagesToUpdate() {
     fs.writeFileSync(OUTPUT_FILENAME, sortedPackagesToUpdate.join('\n'));
     process.exit(1);
 }
-
-module.exports.getSortedPackagesToUpdate = getSortedPackagesToUpdate;

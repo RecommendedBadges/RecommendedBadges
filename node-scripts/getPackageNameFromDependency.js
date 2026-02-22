@@ -5,7 +5,7 @@ import child_process from 'node:child_process';
 const exec = promisify(child_process.exec);
 import { HUB_ALIAS, PACKAGE_ALIAS_DELIMITER, PACKAGE_ID_PREFIX, PACKAGE_VERSION_ID_PREFIX, PACKAGE_IDS_TO_ALIASES } from './constants.js';
 
-export async function getPackageNameFromDependency(dependentPackage) {
+export default async function getPackageNameFromDependency(dependentPackage) {
     let endIndex = dependentPackage.package.indexOf(PACKAGE_ALIAS_DELIMITER);
     if(endIndex == -1) {
         endIndex = dependentPackage.package.length;
@@ -32,5 +32,3 @@ export async function getPackageNameFromDependency(dependentPackage) {
         return dependentPackage.package.slice(0, endIndex);
     }
 }
-
-module.exports = getPackageNameFromDependency;

@@ -8,7 +8,7 @@ const REPO = process.env.CIRCLE_PROJECT_REPONAME || 'RecommendedBadges';
 const PULL_REQUEST_NUMBER = process.env.CIRCLE_PULL_REQUEST ? process.env.CIRCLE_PULL_REQUEST.substring(process.env.CIRCLE_PULL_REQUEST.lastIndexOf('/')+1) : 115;
 const PACKAGE_LABEL = process.env.PACKAGE_LABEL;
 
-export async function getPackageToggle() {
+export default async function getPackageToggle() {
     try {
         const {stdout, stderr} = await exec(`gh api -H "Accept: application/vnd.github+json" /repos/${USERNAME}/${REPO}/pulls/${PULL_REQUEST_NUMBER}`);
         if(stderr) {
@@ -29,5 +29,3 @@ export async function getPackageToggle() {
         console.error(err);
     }
 }
-
-module.exports = getPackageToggle;

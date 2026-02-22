@@ -2,7 +2,7 @@
 
 import getPackageNameFromDependency from './getPackageNameFromDependency.js';
 
-export async function sortPackages(packages, PACKAGE_DIRECTORIES) {
+export default async function sortPackages(packages, PACKAGE_DIRECTORIES) {
     let packagesWithDependencies = {};
 
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
@@ -52,5 +52,3 @@ function getStartNodes(nodeList) {
     }
     return startNodes;
 }
-
-module.exports = sortPackages;

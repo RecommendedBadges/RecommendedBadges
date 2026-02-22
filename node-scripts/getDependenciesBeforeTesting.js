@@ -6,7 +6,7 @@ const exec = promisify(child_process.exec);
 import { ensurePackageIdsInPackageAliases } from './ensurePackageIdsInPackageAliases.js';
 import { HUB_ALIAS, PACKAGE_ALIASES, PACKAGE_DIRECTORIES, PACKAGE_ID_PREFIX, PACKAGE_VERSION_ID_PREFIX, PROJECT_PACKAGE_NAMES } from './constants.js';
 
-export async function getDependenciesBeforeTesting() {
+export default async function getDependenciesBeforeTesting() {
     await ensurePackageIdsInPackageAliases();
 
     const PACKAGE_IDS = Object.values(PACKAGE_ALIASES);
@@ -78,5 +78,3 @@ async function getPackageIdFromDependency(dependency) {
     }
     return JSON.parse(stdout).result.records[0].SubscriberPackageVersionId;
 }
-
-module.exports.getDependenciesBeforeTesting = getDependenciesBeforeTesting;
