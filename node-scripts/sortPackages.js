@@ -3,14 +3,14 @@
 import getPackageNameFromDependency from './getPackageNameFromDependency.js';
 
 export default async function sortPackages(packages, PACKAGE_DIRECTORIES) {
-    let packagesWithDependencies = {};
+    const packagesWithDependencies = {};
 
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
         if(packages.has(packageDirectory.package)) {
-            let dependencies = [];
+            const dependencies = [];
             if(packageDirectory.dependencies) {
-                for(let dependentPackage of packageDirectory.dependencies) {
-                    let packageName = await getPackageNameFromDependency(dependentPackage)
+                for(const dependentPackage of packageDirectory.dependencies) {
+                    const packageName = await getPackageNameFromDependency(dependentPackage)
                     if(packages.has(packageName)) {
                         dependencies.push(packageName);
                     }
@@ -20,13 +20,13 @@ export default async function sortPackages(packages, PACKAGE_DIRECTORIES) {
         }
     }
 
-    let sortedPackages = [];
+    const sortedPackages = [];
     let rootNodes = getStartNodes(packagesWithDependencies);
 
     while(rootNodes.length) {
         sortedPackages.push(...rootNodes);
-        let newRootNodes = [];
-        for(let p in packagesWithDependencies) {
+        const newRootNodes = [];
+        for(const p in packagesWithDependencies) {
                 if(rootNodes.includes(p)) {
                     delete packagesWithDependencies[p];
                 } else {
@@ -44,8 +44,8 @@ export default async function sortPackages(packages, PACKAGE_DIRECTORIES) {
 }
 
 function getStartNodes(nodeList) {
-    let startNodes = [];
-    for(let node in nodeList) {
+    const startNodes = [];
+    for(const node in nodeList) {
         if(nodeList[node].length == 0) {
             startNodes.push(node);
         }

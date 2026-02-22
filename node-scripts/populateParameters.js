@@ -7,7 +7,7 @@ import getPackageToggle from './getPackageToggle.js';
 const OUTPUT_FILENAME = 'parameters.json';
 
 async function populateParameters() {
-    let parameters = await getLimits();
+    const parameters = await getLimits();
     parameters["create-packages"] = await getPackageToggle();
     fs.writeFileSync(OUTPUT_FILENAME, JSON.stringify(parameters)); 
 }

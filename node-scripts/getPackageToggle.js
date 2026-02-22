@@ -16,9 +16,9 @@ export default async function getPackageToggle() {
             process.exit(1);
         }
         
-        let labels = JSON.parse(stdout).labels;
+        const labels = JSON.parse(stdout).labels;
         if(labels.length != 0) {
-            for(let label of labels) {
+            for(const label of labels) {
                 if(label.name === PACKAGE_LABEL) {
                     return true;
                 }

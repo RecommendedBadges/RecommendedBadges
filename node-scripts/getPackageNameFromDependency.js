@@ -12,7 +12,7 @@ export default async function getPackageNameFromDependency(dependentPackage) {
     }
 
     if(dependentPackage.package.startsWith(PACKAGE_VERSION_ID_PREFIX) && Object.keys(PACKAGE_IDS_TO_ALIASES).includes(dependentPackage.package)) {
-        let alias = PACKAGE_IDS_TO_ALIASES[dependentPackage.package];
+        const alias = PACKAGE_IDS_TO_ALIASES[dependentPackage.package];
         return alias.slice(0, alias.indexOf(PACKAGE_ALIAS_DELIMITER));
     } else if(dependentPackage.package.startsWith(PACKAGE_VERSION_ID_PREFIX)) {
         const {stderr, stdout} = await exec(
@@ -22,7 +22,7 @@ export default async function getPackageNameFromDependency(dependentPackage) {
             process.stderr.write(`Error in getPackageNameFromDependency(): ${stderr}`);
             process.exit(1);
         }
-        let result = JSON.parse(stdout).result.records;
+        const result = JSON.parse(stdout).result.records;
         if(result.length > 0 && PACKAGE_IDS_TO_ALIASES[result[0].Package2Id]) {
             return PACKAGE_IDS_TO_ALIASES[result[0].Package2Id];
         }

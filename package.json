@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint **/{aura,lwc}/**",
     "test": "npm run test:unit",
-    "test:unit": "sfdx-lwc-jest",
+    "test:unit": "sfdx-lwc-jest -- --passWithNoTests -u",
     "test:unit:watch": "sfdx-lwc-jest --watch",
     "test:unit:debug": "sfdx-lwc-jest --debug",
     "test:unit:coverage": "sfdx-lwc-jest --coverage",
@@ -31,7 +31,7 @@
     "@salesforce/sfdx-lwc-jest": "^0.13.0",
     "eslint": "^7.29.0",
     "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-jest": "^24.7.0",
     "husky": "^7.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.2"

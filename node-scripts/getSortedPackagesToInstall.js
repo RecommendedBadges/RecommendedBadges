@@ -8,8 +8,8 @@ import sortPackages from './sortPackages.js';
 import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 
 async function getLatestPackageVersionIds() {
-    let latestPackageVersionIds = {};
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
+    const latestPackageVersionIds = {};
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
         if(packageDirectory.package) {
             const {stdout, stderr} = await exec(
                 `sf data query -q "SELECT SubscriberPackageVersionId FROM Package2Version WHERE Package2.Name='${packageDirectory.package}' ORDER BY MajorVersion DESC, MinorVersion DESC, PatchVersion DESC, BuildNumber DESC LIMIT 1" -t -o ${HUB_ALIAS} --json`
@@ -27,15 +27,15 @@ async function getLatestPackageVersionIds() {
 
 async function getSortedPackagesToInstall() {
     await ensurePackageIdsInPackageAliases();
-    let latestPackageVersionIds = await getLatestPackageVersionIds();
+    const latestPackageVersionIds = await getLatestPackageVersionIds();
 
-    let packages = new Set();
-    for(let packageId in latestPackageVersionIds) {
-        packages.add(packageId);
+    const packages = new Set();
+    for(const packageName in latestPackageVersionIds) {
+        packages.add(packageName);
     }
 
-    let sortedPackagesToInstall = await sortPackages(packages, PACKAGE_DIRECTORIES);
-    for(let i in sortedPackagesToInstall) {
+    const sortedPackagesToInstall = await sortPackages(packages, PACKAGE_DIRECTORIES);
+    for(const i in sortedPackagesToInstall) {
         sortedPackagesToInstall[i] = latestPackageVersionIds[sortedPackagesToInstall[i]];
     }
 

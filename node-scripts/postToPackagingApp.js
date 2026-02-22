@@ -1,4 +1,3 @@
-import axios from 'axios';
 import fs from 'node:fs';
 import { promisify } from 'node:util';
 import child_process from 'node:child_process';
@@ -23,10 +22,10 @@ async function postToPackagingApp() {
             sortedPackagesToUpdate
         })}`);
         if(stderr) {
-            process.stderr.write(`Error in getLimits(): ${stderr}`);
+            process.stderr.write(`Error in postToPackagingApp(): ${stderr}`);
             process.exit(1);
         }
-        console.log(`Job ID: ${stdout}`);
+        console.log(`${stdout}`);
     } catch(err) {
         process.stderr.write(`Error in postToPackagingApp(): ${err}`);
         process.exit(1);

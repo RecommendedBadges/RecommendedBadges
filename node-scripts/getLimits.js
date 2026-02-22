@@ -16,25 +16,27 @@ export default async function getLimits() {
             process.exit(1);
         }
         
-        let jsonResponse = JSON.parse(stdout);
-        let limitList = jsonResponse.result;
+        const jsonResponse = JSON.parse(stdout);
+        const limitList = jsonResponse.result;
         let remainingScratchOrgs;
         let remainingPackageVersions;
         let remainingPackageVersionsNoValidation;
 
-        for(let limit of limitList) {
+        for(const limit of limitList) {
             switch(limit.name) {
                 case SCRATCH_ORG_LIMIT:
                     remainingScratchOrgs = limit.remaining;
                     break;
                 case PACKAGE_VERSION_LIMIT:
                     remainingPackageVersions = limit.remaining;
+                    break;
                 case PACKAGE_VERSION_NO_VALIDATION_LIMIT:
                     remainingPackageVersionsNoValidation = limit.remaining;
+                    break;
             }
         }
 
-        let limits = {
+        const limits = {
             "remaining-scratch-orgs": remainingScratchOrgs,
             "remaining-packages": remainingPackageVersions,
             "remaining-packages-without-validation": remainingPackageVersionsNoValidation

@@ -10,12 +10,12 @@ async function getDependenciesBeforeTesting() {
     await ensurePackageIdsInPackageAliases();
 
     const PACKAGE_IDS = Object.values(PACKAGE_ALIASES);
-    let possibleRequiredPackageVersionIds = new Set();
-    let requiredPackageVersionIds = new Set();
+    const possibleRequiredPackageVersionIds = new Set();
+    const requiredPackageVersionIds = new Set();
 
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
-        for(let i in packageDirectory.dependencies) {
-            let requiredPackage = packageDirectory.dependencies[i].package;
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
+        for(const i in packageDirectory.dependencies) {
+            const requiredPackage = packageDirectory.dependencies[i].package;
             if(requiredPackage.startsWith(PACKAGE_VERSION_ID_PREFIX) && !PACKAGE_IDS.includes(requiredPackage)) {
                 possibleRequiredPackageVersionIds.add(requiredPackage);
             } else if(
@@ -31,7 +31,7 @@ async function getDependenciesBeforeTesting() {
     }
 
     if(possibleRequiredPackageVersionIds.size > 0) {
-        let queryConditionIds = Array.from(possibleRequiredPackageVersionIds).map(x => '\'' + x + '\'').join(', ');
+        const queryConditionIds = Array.from(possibleRequiredPackageVersionIds).map(x => '\'' + x + '\'').join(', ');
 
         const {stdout, stderr} = await exec(
             `sf data query -q "SELECT SubscriberPackageVersionId, Package2Id, Package2.Name FROM Package2Version WHERE SubscriberPackageVersionId IN (${queryConditionIds})" -t -o ${HUB_ALIAS} --json`
@@ -41,14 +41,14 @@ async function getDependenciesBeforeTesting() {
             process.exit(1);
         }
         
-        let queryResult = JSON.parse(stdout).result.records;
-        for(let result of queryResult) {
+        const queryResult = JSON.parse(stdout).result.records;
+        for(const result of queryResult) {
             if(PACKAGE_IDS.includes(result.Package2Id)) {
                 possibleRequiredPackageVersionIds.delete(result.SubscriberPackageVersionId)
             }
         }
 
-        for(let requiredPackage of possibleRequiredPackageVersionIds) {
+        for(const requiredPackage of possibleRequiredPackageVersionIds) {
             requiredPackageVersionIds.add(requiredPackage);
         }
     }
@@ -57,11 +57,11 @@ async function getDependenciesBeforeTesting() {
 }
 
 async function getPackageIdFromDependency(dependency) {
-    let versionNumber = dependency.versionNumber.split('.');
+    const versionNumber = dependency.versionNumber.split('.');
     let stdout;
     let stderr;
 
-    let queryBase = `SELECT SubscriberPackageVersionId FROM Package2Version WHERE Package2Id = '${dependency.package}' AND MajorVersion = ${versionNumber[0]} AND MinorVersion = ${versionNumber[1]} AND PatchVersion = ${versionNumber[2]}`;
+    const queryBase = `SELECT SubscriberPackageVersionId FROM Package2Version WHERE Package2Id = '${dependency.package}' AND MajorVersion = ${versionNumber[0]} AND MinorVersion = ${versionNumber[1]} AND PatchVersion = ${versionNumber[2]}`;
     if(dependency.versionNumber.includes('LATEST')) {
         ({stdout, stderr} = await exec(`sf data query -q "${queryBase} ORDER BY BuildNumber DESC LIMIT 1" -o ${HUB_ALIAS} -t --json`));
     } else if(dependency.versionNumber.includes('RELEASED')) {

@@ -6,14 +6,14 @@ import { PACKAGE_DIRECTORIES } from './constants.js';
 const FORCE_IGNORE_FILENAME = '.forceignore';
 
 function updateForceIgnore() {
-    let sourceDirectories = [];
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
+    const sourceDirectories = [];
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
         sourceDirectories.push(packageDirectory.path);
     }
 
-    let forceIgnore = fs.readFileSync(FORCE_IGNORE_FILENAME, {encoding: 'utf8'});
-    let forceIgnoreLines = forceIgnore.split('\n');
-    for(let i in forceIgnoreLines) {
+    const forceIgnore = fs.readFileSync(FORCE_IGNORE_FILENAME, {encoding: 'utf8'});
+    const forceIgnoreLines = forceIgnore.split('\n');
+    for(const i in forceIgnoreLines) {
         if(sourceDirectories.includes(forceIgnoreLines[i]) && (forceIgnoreLines[i].indexOf('#') == -1)) {
             forceIgnoreLines[i] = '#' + forceIgnoreLines[i];
         }
