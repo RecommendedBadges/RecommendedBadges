@@ -1,7 +1,8 @@
 #!/bin/env node
 
-import util from 'util';
-const exec = util.promisify(require('child_process').exec);
+import { promisify } from 'node:util';
+import child_process from 'node:child_process';
+const exec = promisify(child_process.exec);
 
 const SCRATCH_ORG_LIMIT = 'DailyScratchOrgs';
 const PACKAGE_VERSION_LIMIT = 'Package2VersionCreates';
