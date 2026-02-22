@@ -5,7 +5,7 @@ const exec = promisify(child_process.exec);
 
 const SORTED_PACKAGES_TO_UPDATE_FILE = '/tmp/artifacts/packagesToUpdate.txt';
 const PULL_REQUEST_URL = process.env.CIRCLE_PULL_REQUEST;
-const LAMBDA_INVOKE_COMMAND = 'aws lambda invoke --function-name PackagingLambda --invocation-type Event --no-cli-auto-prompt';
+const LAMBDA_INVOKE_COMMAND = `aws lambda invoke --function-name ${process.env.PACKAGING_LAMBDA_ARN} --invocation-type Event --no-cli-auto-prompt`;
 
 async function postToPackagingApp() {
     try {
