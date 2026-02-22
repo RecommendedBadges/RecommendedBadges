@@ -7,7 +7,7 @@ import { ensurePackageIdsInPackageAliases } from './ensurePackageIdsInPackageAli
 import { sortPackages } from './sortPackages.js';
 import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 
-export async function getLatestPackageVersionIds() {
+async function getLatestPackageVersionIds() {
     let latestPackageVersionIds = {};
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
         if(packageDirectory.package) {
@@ -42,4 +42,6 @@ async function getSortedPackagesToInstall() {
     process.stdout.write(`${Array.from(sortedPackagesToInstall).join(' ')}`)
 }
 
-module.exports.getSortedPackagesToInstall = getSortedPackagesToInstall;
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    getSortedPackagesToInstall();
+}

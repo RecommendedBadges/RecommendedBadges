@@ -8,7 +8,7 @@ const SORTED_PACKAGES_TO_UPDATE_FILE = '/tmp/artifacts/packagesToUpdate.txt';
 const PULL_REQUEST_URL = process.env.CIRCLE_PULL_REQUEST;
 const LAMBDA_INVOKE_COMMAND = 'aws lambda invoke --function-name PackagingLambda --invocation-type Event --no-cli-auto-prompt';
 
-export default async function postToPackagingApp() {
+async function postToPackagingApp() {
     try {
         const pullRequestNumber = PULL_REQUEST_URL.substring(PULL_REQUEST_URL.lastIndexOf('/') + 1);
         const sortedPackagesToUpdate = fs.readFileSync(
@@ -31,4 +31,8 @@ export default async function postToPackagingApp() {
         process.stderr.write(`Error in postToPackagingApp(): ${err}`);
         process.exit(1);
     }
+}
+
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    postToPackagingApp();
 }

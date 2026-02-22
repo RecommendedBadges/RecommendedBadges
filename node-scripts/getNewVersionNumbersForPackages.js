@@ -2,7 +2,7 @@
 
 import { PACKAGE_DIRECTORIES } from './constants.js';
 
-export function getNewVersionNumbersForPackages(packagesToUpdate) {
+function getNewVersionNumbersForPackages(packagesToUpdate) {
     const packagesToUpdateSet = new Set(packagesToUpdate);
     const newVersionsByPackage = {};
     for(const packageDirectory of PACKAGE_DIRECTORIES) {
@@ -16,5 +16,7 @@ export function getNewVersionNumbersForPackages(packagesToUpdate) {
     process.stdout.write(JSON.stringify(newVersionsByPackage));
 }
 
-const arg = process.argv.slice(2).join(',').replace('packagesToUpdate=', '').split(',');
-getNewVersionNumbersForPackages(arg);
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    const arg = process.argv.slice(2).join(',').replace('packagesToUpdate=', '').split(',');
+    getNewVersionNumbersForPackages(arg);
+}

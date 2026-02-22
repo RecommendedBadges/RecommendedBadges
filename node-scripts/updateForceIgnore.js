@@ -5,7 +5,7 @@ import { PACKAGE_DIRECTORIES } from './constants.js';
 
 const FORCE_IGNORE_FILENAME = '.forceignore';
 
-export default function updateForceIgnore() {
+function updateForceIgnore() {
     let sourceDirectories = [];
     for(let packageDirectory of PACKAGE_DIRECTORIES) {
         sourceDirectories.push(packageDirectory.path);
@@ -19,4 +19,8 @@ export default function updateForceIgnore() {
         }
     }
     fs.writeFileSync(FORCE_IGNORE_FILENAME, forceIgnoreLines.join('\n'));
+}
+
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    updateForceIgnore();
 }
