@@ -3,7 +3,7 @@
 import { promisify } from 'node:util';
 import child_process from 'node:child_process';
 const exec = promisify(child_process.exec);
-import { ensurePackageIdsInPackageAliases } from './ensurePackageIdsInPackageAliases.js';
+import ensurePackageIdsInPackageAliases from './ensurePackageIdsInPackageAliases.js';
 import { HUB_ALIAS, PACKAGE_ALIASES, PACKAGE_DIRECTORIES, PACKAGE_ID_PREFIX, PACKAGE_VERSION_ID_PREFIX, PROJECT_PACKAGE_NAMES } from './constants.js';
 
 async function getDependenciesBeforeTesting() {

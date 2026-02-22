@@ -4,9 +4,9 @@ import { promisify } from 'node:util';
 import child_process from 'node:child_process';
 const exec = promisify(child_process.exec);
 import fs from 'node:fs';
-import { sortPackages } from './sortPackages.js';
-import { ensurePackageIdsInPackageAliases } from './ensurePackageIdsInPackageAliases.js';
-import { getPackageNameFromDependency } from './getPackageNameFromDependency.js';
+import sortPackages from './sortPackages.js';
+import ensurePackageIdsInPackageAliases from './ensurePackageIdsInPackageAliases.js';
+import getPackageNameFromDependency from './getPackageNameFromDependency.js';
 import { PACKAGE_DIRECTORIES } from './constants.js';
 
 const OUTPUT_FILENAME = '/tmp/artifacts/packagesToUpdate.txt';

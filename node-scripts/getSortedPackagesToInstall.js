@@ -3,8 +3,8 @@
 import { promisify } from 'node:util';
 import child_process from 'node:child_process';
 const exec = promisify(child_process.exec);
-import { ensurePackageIdsInPackageAliases } from './ensurePackageIdsInPackageAliases.js';
-import { sortPackages } from './sortPackages.js';
+import ensurePackageIdsInPackageAliases from './ensurePackageIdsInPackageAliases.js';
+import sortPackages from './sortPackages.js';
 import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 
 async function getLatestPackageVersionIds() {
