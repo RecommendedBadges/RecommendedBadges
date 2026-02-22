@@ -17,10 +17,9 @@ async function postToPackagingApp() {
             }
         ).split('\n');
 
-        const {stdout, stderr} = await exec(`${LAMBDA_INVOKE_COMMAND} --payload ${JSON.stringify({
-            pullRequestNumber,
-            sortedPackagesToUpdate
-        })}`);
+        const {stdout, stderr} = await exec(
+            `${LAMBDA_INVOKE_COMMAND} --payload ${JSON.stringify({pullRequestNumber, sortedPackagesToUpdate})} response.json`
+        );
         if(stderr) {
             process.stderr.write(`Error in postToPackagingApp(): ${stderr}`);
             process.exit(1);
