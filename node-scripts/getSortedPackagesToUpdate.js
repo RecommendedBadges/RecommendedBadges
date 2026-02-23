@@ -64,3 +64,7 @@ export default async function getSortedPackagesToUpdate() {
     fs.writeFileSync(OUTPUT_FILENAME, sortedPackagesToUpdate.join('\n'));
     process.exit(1);
 }
+
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    getSortedPackagesToUpdate();
+}
