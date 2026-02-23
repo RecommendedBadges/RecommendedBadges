@@ -141,6 +141,7 @@ jobs:
               - aws-cli/setup:
                   role_arn: "${AWS_ROLE_ARN}"
                   role_session_name: "${AWS_ROLE_SESSION_NAME}"
+                  configure_default_region: true
               - run:
                   name: Make Request to Packaging App
                   command: |
