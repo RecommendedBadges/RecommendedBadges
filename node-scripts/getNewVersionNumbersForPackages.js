@@ -6,20 +6,13 @@ const exec = promisify(child_process.exec);
 import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 
 async function getNewVersionNumbersForPackages(packagesToUpdate) {
-    process.stdout.write(`packagesToUpdate ${packagesToUpdate}\r`);
-    const packagesToUpdateSet = new Set(packagesToUpdate);
-    process.stdout.write(`packagesToUpdateSet ${JSON.stringify(Array.from(packagesToUpdateSet))}\r`);
     const newVersionsByPackage = {};
     for(const packageDirectory of PACKAGE_DIRECTORIES) {
-        process.stdout.write(`packageDirectory.package ${packageDirectory.package}\r`);
-        process.stdout.write(`$packagesToUpdateSet.has(packageDirectory.package) ${packagesToUpdateSet.has(packageDirectory.package)}\r`);
-        if(packageDirectory.package && packagesToUpdateSet.has(packageDirectory.package)) {
+        if(packageDirectory.package && packagesToUpdate.includes(packageDirectory.package)) {
             const latestVersion = await getLatestPackageVersionNumber(packageDirectory.package);
-            process.stdout.write(`latestVersion ${JSON.stringify(latestVersion)}\r`);
             const newVersion = latestVersion.released ? 
                 `${latestVersion.majorVersion}.${Number.parseInt(latestVersion.minorVersion) + 1}.${latestVersion.patchVersion}.1` :
                 `${latestVersion.majorVersion}.${latestVersion.minorVersion}.${latestVersion.patchVersion}.${Number.parseInt(latestVersion.buildNumber) + 1}`;
-            process.stdout.write(`newVersion ${newVersion}\r`);
             newVersionsByPackage[packageDirectory.package] = newVersion;
         }
     }
@@ -47,7 +40,6 @@ async function getLatestPackageVersionNumber(packageName) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
-    process.stdout.write(`process.argv ${JSON.stringify(process.argv.slice(2))}\r`);
-    let arg = process.argv.slice(2).join(',').replace('packagesToUpdate=', '').split(' ');
+    const arg = process.argv.slice(2).join(',').replace('packagesToUpdate=', '').split(' ');
     getNewVersionNumbersForPackages(arg);
 }
