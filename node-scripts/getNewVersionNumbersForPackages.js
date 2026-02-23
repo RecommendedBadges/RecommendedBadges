@@ -8,6 +8,7 @@ import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 async function getNewVersionNumbersForPackages(packagesToUpdate) {
     process.stdout.write(`packagesToUpdate ${packagesToUpdate}\r`);
     const packagesToUpdateSet = new Set(packagesToUpdate);
+    process.stdout.write(`packagesToUpdateSet ${JSON.stringify(Array.from(packagesToUpdateSet))}\r`);
     const newVersionsByPackage = {};
     for(const packageDirectory of PACKAGE_DIRECTORIES) {
         process.stdout.write(`packageDirectory.package ${packageDirectory.package}\r`);
