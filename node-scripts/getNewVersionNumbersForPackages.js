@@ -50,7 +50,9 @@ if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === proce
     process.stdout.write(`process.argv ${JSON.stringify(process.argv.slice(2))}\r`);
     let arg = process.argv.slice(2).join(',')
     process.stdout.write(`arg before replace ${arg}\r`);
-    arg = arg.replace('["packagesToUpdate=', '').replace('"]', '').split(',');
+    arg = arg.replace('["packagesToUpdate=', '').replace('"]', '')
+    process.stdout.write(`arg after replace ${arg}\r`);
+    arg = arg.split(',');
     process.stdout.write(`arg ${JSON.stringify(arg)}\r`);
     getNewVersionNumbersForPackages(arg);
 }
