@@ -25,11 +25,6 @@ async function getNewVersionNumbersForPackages(packagesToUpdate) {
     process.stdout.write(JSON.stringify(newVersionsByPackage));
 }
 
-if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
-    const arg = process.argv.slice(2).join(',').replace('packagesToUpdate=', '').split(',');
-    getNewVersionNumbersForPackages(arg);
-}
-
 async function getLatestPackageVersionNumber(packageName) {
     const latestPackageVersion = {};
     const {stdout, stderr} = await exec(
@@ -49,4 +44,10 @@ async function getLatestPackageVersionNumber(packageName) {
         released: package2Version.ReleaseState === 'Released'
     };
     return latestPackageVersion;
+}
+
+if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
+    const arg = process.argv.slice(2).join(',').replace('packagesToUpdate=', '').split(',');
+    process.stdout.write(`arg ${JSON.stringify(arg)}\r`);
+    getNewVersionNumbersForPackages(arg);
 }
