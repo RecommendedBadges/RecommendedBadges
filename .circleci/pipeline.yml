@@ -75,6 +75,7 @@ jobs:
                   echo $packagesToUpdate
                   declare -A newVersionNumbersByPackage
                   jsonNewVersionNumbersByPackage=$(npm run  --silent getNewVersionNumbersForPackages -- packagesToUpdate="${packagesToUpdate[@]}")
+                  echo $jsonNewVersionNumbersByPackage
                   for key in $(echo "$jsonNewVersionNumbersByPackage" | jq -r 'keys[]'); do
                     value=$(echo "$jsonNewVersionNumbersByPackage" | jq -r --arg k "$key" '.[$k]')
                     newVersionNumbersByPackage["$key"]=$value
