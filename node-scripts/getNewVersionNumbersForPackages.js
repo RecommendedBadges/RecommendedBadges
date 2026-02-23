@@ -9,8 +9,11 @@ async function getNewVersionNumbersForPackages(packagesToUpdate) {
     const packagesToUpdateSet = new Set(packagesToUpdate);
     const newVersionsByPackage = {};
     for(const packageDirectory of PACKAGE_DIRECTORIES) {
+        process.stdout.write(`packageDirectory.package ${packageDirectory.package}\r`);
+        process.stdout.write(`$packagesToUpdateSet.has(packageDirectory.package) ${packagesToUpdateSet.has(packageDirectory.package)}\r`);
         if(packageDirectory.package && packagesToUpdateSet.has(packageDirectory.package)) {
             const latestVersion = await getLatestPackageVersionNumber(packageDirectory.package);
+            process.stdout.write(`latestVersion ${JSON.stringify(latestVersion)}\r`);
             const newVersion = latestVersion.released ? 
                 `${latestVersion.majorVersion}.${Number.parseInt(latestVersion.minorVersion) + 1}.${latestVersion.patchVersion}.1` :
                 `${latestVersion.majorVersion}.${latestVersion.minorVersion}.${latestVersion.patchVersion}.${Number.parseInt(latestVersion.buildNumber) + 1}`;
