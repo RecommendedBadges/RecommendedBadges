@@ -6,6 +6,7 @@ const exec = promisify(child_process.exec);
 import { HUB_ALIAS, PACKAGE_DIRECTORIES } from './constants.js';
 
 async function getNewVersionNumbersForPackages(packagesToUpdate) {
+    process.stdout.write(`packagesToUpdate ${packagesToUpdate}\r`);
     const packagesToUpdateSet = new Set(packagesToUpdate);
     const newVersionsByPackage = {};
     for(const packageDirectory of PACKAGE_DIRECTORIES) {
