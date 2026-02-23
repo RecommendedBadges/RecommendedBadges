@@ -80,7 +80,7 @@ jobs:
                     newVersionNumbersByPackage["$key"]=$value
                   done
                   for packageToUpdate in ${packagesToUpdate[@]};
-                      do sf package version create -p $packageToUpdate -x -w $WAIT_TIME -n ${newVersionNumbersByPackage[$packageToUpdate]} --skip-validation
+                      do sf package version create -p $packageToUpdate -x -w $WAIT_TIME -n $newVersionNumbersByPackage[$packageToUpdate] --skip-validation
                   done
       - sfdx/scratch_create:
           scratch_alias: TestOrg
