@@ -48,7 +48,9 @@ async function getLatestPackageVersionNumber(packageName) {
 
 if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
     process.stdout.write(`process.argv ${JSON.stringify(process.argv.slice(2))}\r`);
-    const arg = process.argv.slice(2).join(',').replace('["packagesToUpdate=', '').replace('"]', '').split(',');
+    let arg = process.argv.slice(2).join(',')
+    process.stdout.write(`arg before replace ${arg}\r`);
+    arg = arg.replace('["packagesToUpdate=', '').replace('"]', '').split(',');
     process.stdout.write(`arg ${JSON.stringify(arg)}\r`);
     getNewVersionNumbersForPackages(arg);
 }
