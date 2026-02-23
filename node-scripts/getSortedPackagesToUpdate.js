@@ -55,14 +55,13 @@ async function getPackagesToUpdate(changedPackageDirectories) {
     return packagesToUpdate;
 }
 
-export default async function getSortedPackagesToUpdate() {
+async function getSortedPackagesToUpdate() {
     const changedPackageDirectories = await getChangedPackageDirectories();
     await ensurePackageIdsInPackageAliases();
     const packagesToUpdate = await getPackagesToUpdate(changedPackageDirectories);
     const sortedPackagesToUpdate = await sortPackages(packagesToUpdate, PACKAGE_DIRECTORIES);
     process.stdout.write(sortedPackagesToUpdate.join(' '));
     fs.writeFileSync(OUTPUT_FILENAME, sortedPackagesToUpdate.join('\n'));
-    process.exit(1);
 }
 
 if (import.meta.url === `file://${process.argv[1]}` || import.meta.url === process.argv[1]) {
