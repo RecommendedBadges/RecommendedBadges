@@ -145,6 +145,8 @@ jobs:
               - run:
                   name: Make Request to Packaging App
                   command: |
+                    aws sts get-caller-identity
+                    aws configure list
                     npm run --silent postToPackagingApp
 
 workflows:
