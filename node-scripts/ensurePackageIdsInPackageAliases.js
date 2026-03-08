@@ -1,20 +1,20 @@
 #!/bin/env node
 
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+import { promisify } from 'node:util';
+import child_process from 'node:child_process';
+const exec = promisify(child_process.exec);
+import { HUB_ALIAS, PACKAGE_ALIASES, PACKAGE_DIRECTORIES } from './constants.js';
 
-const {HUB_ALIAS, PACKAGE_ALIASES, PACKAGE_DIRECTORIES} = require('./constants.js');
-
-async function ensurePackageIdsInPackageAliases() {
-    let packagesToQuery = [];
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
+export default async function ensurePackageIdsInPackageAliases() {
+    const packagesToQuery = [];
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
         if(!Object.keys(PACKAGE_ALIASES).includes(packageDirectory.package) && packageDirectory.package) {
             packagesToQuery.push(packageDirectory.package);
         }
     }
 
     if(packagesToQuery.length > 0) {
-        let queryConditionNames = packagesToQuery.map(x => '\'' + x + '\'').join(', ');
+        const queryConditionNames = packagesToQuery.map(x => '\'' + x + '\'').join(', ');
         const {stdout, stderr} = await exec(
             `sf data query -q "SELECT Id, Name FROM Package2 WHERE Name IN (${queryConditionNames})" -o ${HUB_ALIAS} -t --json`
         );
@@ -23,11 +23,9 @@ async function ensurePackageIdsInPackageAliases() {
             process.exit(1);
         }
 
-        let queryResults = JSON.parse(stdout).result.records;
-        for(let record of queryResults) {
+        const queryResults = JSON.parse(stdout).result.records;
+        for(const record of queryResults) {
             PACKAGE_ALIASES[record.Name] = record.Id;
         }
     }
 }
-
-module.exports = ensurePackageIdsInPackageAliases;

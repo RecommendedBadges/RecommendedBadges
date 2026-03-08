@@ -4,7 +4,6 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "salesforcedx-vscode-core.push-or-deploy-on-save.enabled": true,
   "salesforcedx-vscode-core.show-cli-success-msg": false,
   "apexPMD.rulesets": [
     ".custompmdrules.xml"
@@ -21,5 +20,6 @@
   },
   "circleci.filters.branchFilter": "currentBranch",
   "codeAnalyzer.pMD.customConfigFile": ".custompmdrules.xml",
-  "codeAnalyzer.analyzeOnOpen.enabled": false
+  "codeAnalyzer.analyzeOnOpen.enabled": false,
+  "xml.preferences.showSchemaDocumentationType": "none"
 }

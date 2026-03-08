@@ -1,16 +1,16 @@
 #!/bin/env node
 
-const getPackageNameFromDependency = require('./getPackageNameFromDependency.js');
+import getPackageNameFromDependency from './getPackageNameFromDependency.js';
 
-async function sortPackages(packages, PACKAGE_DIRECTORIES) {
-    let packagesWithDependencies = {};
+export default async function sortPackages(packages, PACKAGE_DIRECTORIES) {
+    const packagesWithDependencies = {};
 
-    for(let packageDirectory of PACKAGE_DIRECTORIES) {
+    for(const packageDirectory of PACKAGE_DIRECTORIES) {
         if(packages.has(packageDirectory.package)) {
-            let dependencies = [];
+            const dependencies = [];
             if(packageDirectory.dependencies) {
-                for(let dependentPackage of packageDirectory.dependencies) {
-                    let packageName = await getPackageNameFromDependency(dependentPackage)
+                for(const dependentPackage of packageDirectory.dependencies) {
+                    const packageName = await getPackageNameFromDependency(dependentPackage)
                     if(packages.has(packageName)) {
                         dependencies.push(packageName);
                     }
@@ -20,21 +20,21 @@ async function sortPackages(packages, PACKAGE_DIRECTORIES) {
         }
     }
 
-    let sortedPackages = [];
+    const sortedPackages = [];
     let rootNodes = getStartNodes(packagesWithDependencies);
 
     while(rootNodes.length) {
         sortedPackages.push(...rootNodes);
-        let newRootNodes = [];
-        for(let package in packagesWithDependencies) {
-                if(rootNodes.includes(package)) {
-                    delete packagesWithDependencies[package];
+        const newRootNodes = [];
+        for(const p in packagesWithDependencies) {
+                if(rootNodes.includes(p)) {
+                    delete packagesWithDependencies[p];
                 } else {
-                    packagesWithDependencies[package] = packagesWithDependencies[package].filter(element => {
+                    packagesWithDependencies[p] = packagesWithDependencies[p].filter(element => {
                     return !rootNodes.includes(element);
                 });
-                if(!packagesWithDependencies[package].length) {
-                    newRootNodes.push(package);
+                if(!packagesWithDependencies[p].length) {
+                    newRootNodes.push(p);
                 }
             }
         }
@@ -44,13 +44,11 @@ async function sortPackages(packages, PACKAGE_DIRECTORIES) {
 }
 
 function getStartNodes(nodeList) {
-    let startNodes = [];
-    for(let node in nodeList) {
+    const startNodes = [];
+    for(const node in nodeList) {
         if(nodeList[node].length == 0) {
             startNodes.push(node);
         }
     }
     return startNodes;
 }
-
-module.exports = sortPackages;
