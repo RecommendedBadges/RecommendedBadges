@@ -39,7 +39,7 @@
       "path": "Core",
       "package": "Core",
       "versionName": "Akron",
-      "versionNumber": "2.24.0.NEXT",
+      "versionNumber": "2.25.15.NEXT",
       "default": false,
       "calculateTransitiveDependencies": true,
       "dependencies": [
@@ -65,7 +65,7 @@
       "default": false,
       "package": "Triggers",
       "versionName": "Akron",
-      "versionNumber": "2.20.0.NEXT",
+      "versionNumber": "2.21.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
@@ -73,7 +73,7 @@
         },
         {
           "package": "Core",
-          "versionNumber": "2.24.0.LATEST"
+          "versionNumber": "2.25.15.LATEST"
         }
       ]
     },
@@ -82,12 +82,12 @@
       "default": false,
       "package": "SortCustomMetadata",
       "versionName": "Akron",
-      "versionNumber": "1.29.0.NEXT",
+      "versionNumber": "1.30.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "Core",
-          "versionNumber": "2.24.0.LATEST"
+          "versionNumber": "2.25.15.LATEST"
         }
       ]
     },
@@ -96,12 +96,12 @@
       "default": false,
       "package": "RecommendedBadgeMix",
       "versionName": "Akron",
-      "versionNumber": "1.36.0.NEXT",
+      "versionNumber": "1.37.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "SortCustomMetadata",
-          "versionNumber": "1.29.0.LATEST"
+          "versionNumber": "1.30.0.LATEST"
         }
       ]
     },
@@ -109,14 +109,14 @@
       "path": "PrivateMixView",
       "package": "PrivateMixView",
       "versionName": "Akron",
-      "versionNumber": "1.33.0.NEXT",
+      "versionNumber": "1.34.0.NEXT",
       "default": false,
       "versionDescription": "Package containing classes, LWCs, and Lightning pages for the private view portion of the Recommended Badges app.",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "SortCustomMetadata",
-          "versionNumber": "1.29.0.LATEST"
+          "versionNumber": "1.30.0.LATEST"
         }
       ]
     },
@@ -125,7 +125,7 @@
       "default": false,
       "package": "UserInterface",
       "versionName": "Akron",
-      "versionNumber": "1.34.0.NEXT",
+      "versionNumber": "1.36.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
@@ -136,17 +136,17 @@
         },
         {
           "package": "PrivateMixView",
-          "versionNumber": "1.33.0.LATEST"
+          "versionNumber": "1.34.0.LATEST"
         },
         {
           "package": "RecommendedBadgeMix",
-          "versionNumber": "1.36.0.LATEST"
+          "versionNumber": "1.37.0.LATEST"
         }
       ]
     },
     {
       "versionName": "Ripley",
-      "versionNumber": "1.6.0.NEXT",
+      "versionNumber": "1.7.0.NEXT",
       "path": "RecommendedArticles",
       "default": false,
       "package": "RecommendedArticles",
@@ -155,7 +155,7 @@
       "dependencies": [
         {
           "package": "Core",
-          "versionNumber": "2.24.0.LATEST"
+          "versionNumber": "2.25.15.LATEST"
         }
       ],
       "unpackagedMetadata": {
@@ -182,7 +182,6 @@
     "StorageLimits": "04t8c000000vGr4AAE",
     "TestSupport": "04t8c000000vH2MAAU",
     "TriggerHandler": "04t8b000000jtsMAAQ",
-    "CIAuthentication": "0Hog70000000GO9CAM",
     "Core": "0Ho8c000000fxx5CAA",
     "LWCUtils": "0Ho8c000000fy64CAA",
     "Triggers": "0Ho8c000000fy69CAA",
@@ -196,13 +195,12 @@
     "fflib@1.11.0-1": "04t8c000000vG2PAAU",
     "LWCErrorHandler@1.13.0-1": "04t8c000000vGwxAAE",
     "LWCUtils@1.39.0-1": "04t8c000000vH1JAAU",
-    "Core@2.24.0-1": "04t8c000000vH30AAE",
-    "Triggers@2.20.0-1": "04t8c000000vH35AAE",
-    "SortCustomMetadata@1.29.0-1": "04t8c000000vH3AAAU",
-    "RecommendedArticles@1.6.0-1": "04t8c000000vH3FAAU",
-    "RecommendedBadgeMix@1.36.0-1": "04t8c000000vH3KAAU",
-    "PrivateMixView@1.33.0-1": "04t8c000000vH3PAAU",
-    "UserInterface@1.35.0-1": "04t8c000000vH3UAAU",
-    "CIAuthentication@1.0.0-1": "04tg70000000qHxAAI"
+    "Core@2.25.15-54": "04tg70000001yyDAAQ",
+    "Triggers@2.21.0-11": "04tg70000001z4fAAA",
+    "SortCustomMetadata@1.30.0-10": "04tg70000001z6HAAQ",
+    "RecommendedArticles@1.7.0-10": "04tg70000001zSrAAI",
+    "RecommendedBadgeMix@1.37.0-10": "04tg70000001zUTAAY",
+    "PrivateMixView@1.34.0-10": "04tg70000001zavAAA",
+    "UserInterface@1.36.0-10": "04tg7000000247ZAAQ"
   }
 }

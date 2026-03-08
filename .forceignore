@@ -58,7 +58,6 @@ package.xml
 #**Home_Page_Default.flexipage**
 
 # Ignored Packages
-#CIAuthorization
 Core
 fflib
 LWCErrorHandler
