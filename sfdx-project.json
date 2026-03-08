@@ -32,7 +32,7 @@
       "package": "Core",
       "versionName": "Akron",
       "versionNumber": "2.25.15.NEXT",
-      "default": false,
+      "default": true,
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
