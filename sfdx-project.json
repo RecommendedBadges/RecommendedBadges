@@ -1,14 +1,6 @@
 {
   "packageDirectories": [
     {
-      "versionName": "Moraine",
-      "versionNumber": "1.0.0.NEXT",
-      "path": "CIAuthentication",
-      "default": true,
-      "package": "CIAuthentication",
-      "versionDescription": "Package containing external client apps for authentication during CI jobs."
-    },
-    {
       "path": "fflib",
       "default": false,
       "package": "fflib",
