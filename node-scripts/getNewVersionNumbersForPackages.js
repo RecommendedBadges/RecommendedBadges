@@ -22,21 +22,23 @@ async function getNewVersionNumbersForPackages(packagesToUpdate) {
 
 async function getLatestPackageVersionNumber(packageName, majorVersion, minorVersion) {
     const {stdout, stderr} = await exec(
-        `sf data query -q "SELECT MajorVersion, MinorVersion, PatchVersion, BuildNumber, IsReleased FROM Package2Version WHERE Package2.Name='${packageName}' AND MajorVersion=${majorVersion} AND MinorVersion=${minorVersion} ORDER BY MajorVersion DESC, MinorVersion DESC, PatchVersion DESC, BuildNumber DESC" -t -o ${HUB_ALIAS} --json`
+        `sf data query -q "SELECT MajorVersion, MinorVersion, PatchVersion, BuildNumber, IsReleased FROM Package2Version WHERE Package2.Name='${packageName}' ORDER BY MajorVersion DESC, MinorVersion DESC, PatchVersion DESC, BuildNumber DESC" -t -o ${HUB_ALIAS} --json`
     );
     if(stderr) {
         process.stderr.write(`Error in getLatestPackageVersionNumbers(): ${stderr}`);
         process.exit(1);
     }
 
+    const package2Version = JSON.parse(stdout).result.records[0];
     let released = false;
-    for(const record of JSON.parse(stdout).result.records) {
-        if(record.IsReleased) {
-            released = true;
-            break;
+    if(package2Version.MajorVersion === majorVersion && package2Version.MinorVersion === minorVersion) {
+        for(const record of JSON.parse(stdout).result.records) {
+            if(record.IsReleased) {
+                released = true;
+                break;
+            }
         }
     }
-    const package2Version = JSON.parse(stdout).result.records[0];
     const latestPackageVersion = {
         majorVersion: package2Version.MajorVersion,
         minorVersion: package2Version.MinorVersion,
