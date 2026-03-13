@@ -25,13 +25,13 @@
       "default": false,
       "package": "LWCUtils",
       "versionName": "Akron",
-      "versionNumber": "1.39.0.NEXT"
+      "versionNumber": "1.40.0.NEXT"
     },
     {
       "path": "Core",
       "package": "Core",
       "versionName": "Akron",
-      "versionNumber": "2.25.15.NEXT",
+      "versionNumber": "2.27.0.NEXT",
       "default": true,
       "calculateTransitiveDependencies": true,
       "dependencies": [
@@ -48,7 +48,7 @@
         },
         {
           "package": "LWCUtils",
-          "versionNumber": "1.39.0.LATEST"
+          "versionNumber": "1.40.0.LATEST"
         }
       ]
     },
@@ -57,7 +57,7 @@
       "default": false,
       "package": "Triggers",
       "versionName": "Akron",
-      "versionNumber": "2.21.0.NEXT",
+      "versionNumber": "2.22.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
@@ -65,7 +65,7 @@
         },
         {
           "package": "Core",
-          "versionNumber": "2.25.15.LATEST"
+          "versionNumber": "2.27.0.LATEST"
         }
       ]
     },
@@ -74,12 +74,12 @@
       "default": false,
       "package": "SortCustomMetadata",
       "versionName": "Akron",
-      "versionNumber": "1.30.0.NEXT",
+      "versionNumber": "1.31.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "Core",
-          "versionNumber": "2.25.15.LATEST"
+          "versionNumber": "2.27.0.LATEST"
         }
       ]
     },
@@ -88,12 +88,12 @@
       "default": false,
       "package": "RecommendedBadgeMix",
       "versionName": "Akron",
-      "versionNumber": "1.37.0.NEXT",
+      "versionNumber": "1.38.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "SortCustomMetadata",
-          "versionNumber": "1.30.0.LATEST"
+          "versionNumber": "1.31.0.LATEST"
         }
       ]
     },
@@ -101,14 +101,14 @@
       "path": "PrivateMixView",
       "package": "PrivateMixView",
       "versionName": "Akron",
-      "versionNumber": "1.34.0.NEXT",
+      "versionNumber": "1.35.0.NEXT",
       "default": false,
       "versionDescription": "Package containing classes, LWCs, and Lightning pages for the private view portion of the Recommended Badges app.",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
-          "package": "SortCustomMetadata",
-          "versionNumber": "1.30.0.LATEST"
+          "package": "Core",
+          "versionNumber": "2.27.0.LATEST"
         }
       ]
     },
@@ -117,7 +117,7 @@
       "default": false,
       "package": "UserInterface",
       "versionName": "Akron",
-      "versionNumber": "1.36.0.NEXT",
+      "versionNumber": "1.37.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
@@ -128,17 +128,17 @@
         },
         {
           "package": "PrivateMixView",
-          "versionNumber": "1.34.0.LATEST"
+          "versionNumber": "1.35.0.LATEST"
         },
         {
           "package": "RecommendedBadgeMix",
-          "versionNumber": "1.37.0.LATEST"
+          "versionNumber": "1.38.0.LATEST"
         }
       ]
     },
     {
       "versionName": "Ripley",
-      "versionNumber": "1.7.0.NEXT",
+      "versionNumber": "1.8.0.NEXT",
       "path": "RecommendedArticles",
       "default": false,
       "package": "RecommendedArticles",
@@ -147,7 +147,7 @@
       "dependencies": [
         {
           "package": "Core",
-          "versionNumber": "2.25.15.LATEST"
+          "versionNumber": "2.27.0.LATEST"
         }
       ],
       "unpackagedMetadata": {
@@ -186,13 +186,13 @@
     "RecommendedArticles": "0Ho8c0000008OwpCAE",
     "fflib@1.11.0-1": "04t8c000000vG2PAAU",
     "LWCErrorHandler@1.13.0-1": "04t8c000000vGwxAAE",
-    "LWCUtils@1.39.0-1": "04t8c000000vH1JAAU",
-    "Core@2.25.15-54": "04tg70000001yyDAAQ",
-    "Triggers@2.21.0-11": "04tg70000001z4fAAA",
-    "SortCustomMetadata@1.30.0-10": "04tg70000001z6HAAQ",
-    "RecommendedArticles@1.7.0-10": "04tg70000001zSrAAI",
-    "RecommendedBadgeMix@1.37.0-10": "04tg70000001zUTAAY",
-    "PrivateMixView@1.34.0-10": "04tg70000001zavAAA",
-    "UserInterface@1.36.0-10": "04tg7000000247ZAAQ"
+    "LWCUtils@1.40.0-5": "04tg70000002YQbAAM",
+    "Core@2.27.0-1": "04tg70000002bxxAAA",
+    "Triggers@2.22.0-5": "04tg70000002c4PAAQ",
+    "SortCustomMetadata@1.31.0-5": "04tg70000002c7dAAA",
+    "RecommendedArticles@1.8.0-5": "04tg70000002cSbAAI",
+    "RecommendedBadgeMix@1.38.0-5": "04tg70000002cUDAAY",
+    "PrivateMixView@1.35.0-5": "04tg70000002cVpAAI",
+    "UserInterface@1.37.0-5": "04tg70000002cZ3AAI"
   }
 }

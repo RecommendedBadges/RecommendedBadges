@@ -61,11 +61,13 @@ const TREEGRID_COLUMNS = [
     },
     {
         fieldName: BADGE_TYPE_FIELD.fieldApiName.replace('__c', ''),
-        label: 'Type'
+        label: 'Type',
+        sortable: true
     },
     {
         fieldName: BADGE_LEVEL_FIELD.fieldApiName.replace('__c', ''),
-        label: 'Level'
+        label: 'Level',
+        sortable: true
     },
 ]
 
@@ -342,15 +344,25 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
         this.filteredTreegridData = this.treegridDataByMix[event.detail];
     }
 
+    handleTreegridSort(event) {
+        this.sort(event.detail.fieldName, event.detail.sortDirection);
+    }
+
     handleSortChange(event) {
+        this.sort(event.detail);
+    }
+
+    sort(fieldName, sortDirection) {
+        this.sortDirection = sortDirection ?? 'asc';
+        this.sortValue = fieldName;
         this.currentExpandedRows = this.refs.treegrid.getCurrentExpandedRows();
-        const sortableFieldValues = this.sortOptions.find(option => (option.value === event.detail) && option.sortableFieldValues)?.sortableFieldValues.map(s => s.MasterLabel);
+        const sortableFieldValues = this.sortOptions.find(option => (option.value === fieldName) && option.sortableFieldValues)?.sortableFieldValues.map(s => s.MasterLabel);
         const tempTreegridData = structuredClone(this.filteredTreegridData);
 
         for(const category of tempTreegridData) {
             /* eslint-disable no-magic-numbers */
             if(category._children.length > 1) {
-                category._children = sortableFieldValues ? sortCustom(event.detail, category._children, sortableFieldValues) : sortAlphabetic(event.detail, category._children);
+                category._children = sortableFieldValues ? sortCustom(fieldName, category._children, sortableFieldValues, sortDirection) : sortAlphabetic(fieldName, category._children, sortDirection);
             }
         }
         this.filteredTreegridData = tempTreegridData;
