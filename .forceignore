@@ -64,12 +64,12 @@ package.xml
 fflib
 LWCErrorHandler
 #LWCUtils
-#PrivateMixView
+PrivateMixView
 RecommendedArticles
 #RecommendedBadgeMix
 SortCustomMetadata
 Triggers
-UserInterface
+#UserInterface
 
 # Ignored Folders
 unpackageable
