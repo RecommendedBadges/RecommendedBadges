@@ -6,6 +6,8 @@ export default class Treegrid extends LightningElement {
     @api keyField;
     @api treegridData;
     @api displayCustomTreegrid;
+    @api sortedBy;
+    @api sortDirection;
 
     @api expandAll() {
         this.refs.treegrid.expandAll();
@@ -17,5 +19,17 @@ export default class Treegrid extends LightningElement {
 
     @api getCurrentExpandedRows() {
         return this.refs.treegrid.getCurrentExpandedRows();
+    }
+
+    handleSort(event) {
+        const { fieldName, sortDirection } = event.detail;
+        this.sortedBy = fieldName;
+        this.sortDirection = sortDirection;
+        this.dispatchEvent(new CustomEvent('treegridsort', {
+            detail: {
+                fieldName,
+                sortDirection
+            }
+        }));
     }
 }
