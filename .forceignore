@@ -56,11 +56,10 @@ package.xml
 
 ## Temp Ignored
 #**Home_Page_Default.flexipage**
-**Home_Page_Default1.flexipage**
 **RealTimeEvent**
 
 # Ignored Packages
-#Core
+Core
 fflib
 LWCErrorHandler
 #LWCUtils
@@ -69,7 +68,7 @@ RecommendedArticles
 #RecommendedBadgeMix
 SortCustomMetadata
 Triggers
-#UserInterface
+UserInterface
 
 # Ignored Folders
 unpackageable

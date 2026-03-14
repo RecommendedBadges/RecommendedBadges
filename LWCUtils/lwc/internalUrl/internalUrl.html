@@ -1,0 +1,9 @@
+<template>
+    <c-error></c-error>
+    <div lwc:if={renderUrl}>
+        <lightning-formatted-url label={label} value={url}></lightning-formatted-url>
+    </div>
+    <div lwc:else>
+        <lightning-formatted-text value={label}></lightning-formatted-text>
+    </div>
+</template>
