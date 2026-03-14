@@ -25,7 +25,7 @@
       "default": false,
       "package": "LWCUtils",
       "versionName": "Akron",
-      "versionNumber": "1.40.0.NEXT"
+      "versionNumber": "1.41.0.NEXT"
     },
     {
       "path": "Core",
@@ -193,6 +193,8 @@
     "RecommendedArticles@1.8.0-5": "04tg70000002cSbAAI",
     "RecommendedBadgeMix@1.38.0-5": "04tg70000002cUDAAY",
     "PrivateMixView@1.35.0-5": "04tg70000002cVpAAI",
-    "UserInterface@1.37.0-5": "04tg70000002cZ3AAI"
+    "UserInterface@1.37.0-5": "04tg70000002cZ3AAI",
+    "LWCUtils@1.41.0-1": "04tg70000002frtAAA",
+    "LWCUtils@1.41.0-2": "04tg70000002gMXAAY"
   }
 }

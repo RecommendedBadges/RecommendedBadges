@@ -15,7 +15,7 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
-    <sharingGuestRules>
+    <!--<sharingGuestRules>
         <fullName>External_Read_Access_to_Public_Mixes</fullName>
         <accessLevel>Read</accessLevel>
         <description>Read access for external users for non-private recommended badge mixes, mix categories, and recommended badges.</description>
@@ -29,7 +29,7 @@
             <value>False</value>
         </criteriaItems>
         <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
-    </sharingGuestRules>
+    </sharingGuestRules>-->
     <sharingGuestRules>
         <fullName>External_Read_Access_to_Public_Mixes_Enhanced_Site</fullName>
         <accessLevel>Read</accessLevel>
