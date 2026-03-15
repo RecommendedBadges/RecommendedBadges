@@ -96,8 +96,9 @@ jobs:
             packagesToInstall=()
             packagesToInstall+=$( (npm run --silent getDependenciesBeforeTesting) )
             echo $packagesToInstall
-            for packageToInstall in ${packagesToInstall[@]};
-                do sf package install --skip-handlers FeatureEnforcement -p $packageToInstall -o $TEST_ORG_ALIAS -r -w $WAIT_TIME
+            for packageToInstall in ${packagesToInstall[@]}; do
+              echo $packageToInstall
+              sf package install --skip-handlers FeatureEnforcement -p $packageToInstall -o $TEST_ORG_ALIAS -r -w $WAIT_TIME
             done
       - when:
             condition:
