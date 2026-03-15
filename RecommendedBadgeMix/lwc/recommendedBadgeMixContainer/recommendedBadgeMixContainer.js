@@ -8,6 +8,7 @@ import getSortOptions from '@salesforce/apex/SortCustomMetadataController.getSor
 
 import { sortAlphabetic, sortCustom } from 'c/sortUtility';
 
+import MIX_CATEGORY_OBJECT from '@salesforce/schema/Mix_Category__c';
 import MIX_CATEGORY_ID_FIELD from '@salesforce/schema/Mix_Category__c.Id';
 import MIX_CATEGORY_NAME_FIELD from '@salesforce/schema/Mix_Category__c.Name';
 import MIX_CATEGORY_RECOMMENDED_BADGE_MIX_FIELD from '@salesforce/schema/Mix_Category__c.Recommended_Badge_Mix__c';
@@ -44,29 +45,7 @@ const LEVEL_FILTER = 'level';
 const SPINNER_TEXT = 'Loading recommended badges...';
 const TYPE_FILTER = 'type';
 
-/* eslint-disable sort-keys */
-const TREEGRID_COLUMNS = [
-    {
-        type: 'internalUrl',
-        label: 'Name',
-        typeAttributes: {
-            id: { fieldName: BADGE_ID_FIELD.fieldApiName },
-            label: { fieldName: RECOMMENDED_BADGE_NAME_FIELD.fieldApiName },
-            url: { fieldName: BADGE_URL_FIELD.fieldApiName.replace('__c', '')}
-        },
-        initialWidth: 600
-    },
-    {
-        fieldName: BADGE_TYPE_FIELD.fieldApiName.replace('__c', ''),
-        label: 'Type',
-        sortable: true
-    },
-    {
-        fieldName: BADGE_LEVEL_FIELD.fieldApiName.replace('__c', ''),
-        label: 'Level',
-        sortable: true
-    }
-]
+
 
 export default class RecommendedBadgeMixContainer extends LightningElement {
     badgeLevels;
@@ -85,6 +64,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
     isLoading = true;
     currentLastUpdatedDate;
     keyField = BADGE_ID_FIELD.fieldApiName;
+    mixCategoryKeyPrefix;
     mixLabel = 'Select Badge Mix';
     mixOptions;
     mixValue;
@@ -96,9 +76,36 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
     sortOptions;
     sortValue;
     spinnerText = SPINNER_TEXT;
-    treegridColumns = TREEGRID_COLUMNS;
     treegridData;
     treegridDataByMix;
+
+    /* eslint-disable sort-keys */
+
+    get treegridColumns() {
+        return [
+            {
+                type: 'internalUrl',
+                label: 'Name',
+                typeAttributes: {
+                    id: { fieldName: BADGE_ID_FIELD.fieldApiName },
+                    label: { fieldName: RECOMMENDED_BADGE_NAME_FIELD.fieldApiName },
+                    url: { fieldName: BADGE_URL_FIELD.fieldApiName.replace('__c', '')},
+                    excludedKeyPrefixes: [this.mixCategoryKeyPrefix]
+                },
+                initialWidth: 600
+            },
+            {
+                fieldName: BADGE_TYPE_FIELD.fieldApiName.replace('__c', ''),
+                label: 'Type',
+                sortable: true
+            },
+            {
+                fieldName: BADGE_LEVEL_FIELD.fieldApiName.replace('__c', ''),
+                label: 'Level',
+                sortable: true
+            }
+        ];
+    }
 
     get displayExamResources() {
         if(this.isExamMix && this.isExperienceSite) {
@@ -119,6 +126,15 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
         // eslint-disable-next-line no-magic-numbers
         const recordTypeName = this.recordTypeNamesById[this.badgeMixesByName[badgeMixName][RECOMMENDED_BADGE_MIX_RECORD_TYPE_ID_FIELD.fieldApiName]];
         this._isExamMix = recordTypeName === 'Exam';
+    }
+
+    @wire(getObjectInfo, { objectApiName : MIX_CATEGORY_OBJECT })
+    parseMixCategoryObjectInfo({error, data}) {
+        if(data) {
+            this.mixCategoryKeyPrefix = data.keyPrefix;
+        } else if(error) {
+            this.template.querySelector('c-error').handleError(error);
+        }
     }
 
     @wire(getObjectInfo, { objectApiName : RECOMMENDED_BADGE_MIX_OBJECT })

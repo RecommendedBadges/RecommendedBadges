@@ -5,7 +5,7 @@ export default class Treegrid extends LightningTreeGrid {
     static customTypes = {
         internalUrl: {
             template: internalUrlTemplate,
-            typeAttributes: ['label', 'url', 'id'],
+            typeAttributes: ['label', 'url', 'id', 'excludedKeyPrefixes'],
             standardCellLayout: true
         }
     };
