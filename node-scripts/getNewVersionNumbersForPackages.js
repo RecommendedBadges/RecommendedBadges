@@ -34,6 +34,7 @@ async function getLatestPackageVersionNumber(packageName, majorVersion, minorVer
     let released = false;
     if(package2Version.MajorVersion === majorVersion && package2Version.MinorVersion === minorVersion) {
         for(const record of JSON.parse(stdout).result.records) {
+            process.stdout.write(`Checking if version ${record.MajorVersion}.${record.MinorVersion}.${record.PatchVersion}.${record.BuildNumber} is released ${record.IsReleased}\n`);
             if(record.IsReleased) {
                 released = true;
                 break;
