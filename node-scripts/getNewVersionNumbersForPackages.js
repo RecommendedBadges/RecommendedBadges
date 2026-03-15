@@ -21,7 +21,6 @@ async function getNewVersionNumbersForPackages(packagesToUpdate) {
 }
 
 async function getLatestPackageVersionNumber(packageName, majorVersion, minorVersion) {
-    process.stdout.write(`Getting latest package version for package ${packageName} with major version ${majorVersion} and minor version ${minorVersion}\n`);
     const {stdout, stderr} = await exec(
         `sf data query -q "SELECT MajorVersion, MinorVersion, PatchVersion, BuildNumber, IsReleased FROM Package2Version WHERE Package2.Name='${packageName}' ORDER BY MajorVersion DESC, MinorVersion DESC, PatchVersion DESC, BuildNumber DESC" -t -o ${HUB_ALIAS} --json`
     );
@@ -32,9 +31,8 @@ async function getLatestPackageVersionNumber(packageName, majorVersion, minorVer
 
     const package2Version = JSON.parse(stdout).result.records[0];
     let released = false;
-    if(package2Version.MajorVersion == majorVersion && package2Version.MinorVersion == minorVersion) {
+    if(Number.parseInt(package2Version.MajorVersion) === Number.parseInt(majorVersion) && Number.parseInt(package2Version.MinorVersion) === Number.parseInt(minorVersion)) {
         for(const record of JSON.parse(stdout).result.records) {
-            process.stdout.write(`Checking if version ${record.MajorVersion}.${record.MinorVersion}.${record.PatchVersion}.${record.BuildNumber} is released ${record.IsReleased}\n`);
             if(record.IsReleased) {
                 released = true;
                 break;
