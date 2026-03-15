@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 while getopts o:p: flag
 do
     case "${flag}" in
@@ -14,12 +14,19 @@ jsonDependencies=($(sf data query -o RecommendedBadges -t -q "SELECT Dependencie
 dependencies=()
 dependencies+=( $(echo ${jsonDependencies:1:(${#jsonDependencies}-2)} | tr "," " " | tr -d '"') )
 
+jsonInstalledPackages=($(sf package installed list -o $targetorg --json | jq -c '[.result.[].SubscriberPackageVersionId]'))
+installedPackages=()
+installedPackages+=( $(echo ${jsonInstalledPackages:1:(${#jsonInstalledPackages}-2)} | tr "," " " | tr -d '"') )
+
 if ((${#dependencies[@]} > 0))
 then
     for id in ${dependencies[@]}
     do
-        echo "Installing dependent package: "$id
-        sf package install --skip-handlers FeatureEnforcement -p $id -o $targetorg -r -w 20
-        echo ""
+        if (($(echo "${installedPackages[@]}" | grep -c ${id} ) == 0))
+        then
+            echo "Installing dependent package: "$id
+            sf package install --skip-handlers FeatureEnforcement -p $id -o $targetorg -r -w 20
+            echo ""
+        fi
     done
 fi
