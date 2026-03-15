@@ -13,6 +13,7 @@ public inherited sharing class RecommendedArticlesSelector extends ApplicationSe
         return new List<Schema.SObjectField>{
             RecommendedArticle__c.Id,
             RecommendedArticle__c.Name,
+            RecommendedArticle__c.Site__c,
             RecommendedArticle__c.Title__c,
             RecommendedArticle__c.URL__c
         };
@@ -21,7 +22,7 @@ public inherited sharing class RecommendedArticlesSelector extends ApplicationSe
     /**
      * fflib method to return the sObjectType of the object being queried
      * @return  `Schema.SObjectType`
-     */     
+     */
     public Schema.SObjectType getSObjectType() {
         return RecommendedArticle__c.sObjectType;
     }
@@ -29,7 +30,7 @@ public inherited sharing class RecommendedArticlesSelector extends ApplicationSe
     /**
      * returns all RecommendedArticle__c along with the names of all related Topics
      * @return  `List<RecommendedArticle__c>`
-     */    
+     */
     public List<RecommendedArticle__c> selectAllWithTopics() {
         fflib_QueryFactory articlesQueryFactory = newQueryFactory();
 
@@ -45,7 +46,7 @@ public inherited sharing class RecommendedArticlesSelector extends ApplicationSe
         fflib_QueryFactory topicAssignmentsSubQueryFactory = new TopicAssignmentsSelector().addQueryFactorySubselect(articlesQueryFactory, relationshipName)
             .selectField('Topic.Id')
             .selectField('Topic.Name');
-        
+
         return (List<RecommendedArticle__c>) Database.query(articlesQueryFactory.toSOQL());
     }
 }

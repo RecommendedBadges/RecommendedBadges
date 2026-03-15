@@ -1,16 +1,17 @@
 <template>
     <c-error></c-error>
     <div class="slds-grid">
-        <div class="slds-col slds-size_1-of-3">
+        <div class="slds-col slds-size_1-of-3 slds-scrollable_y" style="max-height:85vh">
             <c-filter-panel filters={topics} label="Tags" name="tags" onfilterchange={handleFilterChange}></c-filter-panel>
         </div>
         <div class="slds-col slds-size_2-of-3 slds-scrollable_y" style="max-height:85vh">
             <template for:each={currentArticles} for:item="ca">
                 <c-pilled-tile key={ca.id} pills={ca.topics}>
                     <span slot="tileContents">
-                        <a href={ca.url} target="_blank" class="resourceLink">{ca.title}</a>
+                        <a href={ca.url} target="_blank" class="resourceLink slds-text-heading_medium">{ca.title} | {ca.site}</a>
                     </span>
                 </c-pilled-tile>
+                <hr key={ca.id}/>
             </template>
         </div>
     </div>

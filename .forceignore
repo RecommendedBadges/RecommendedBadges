@@ -13,9 +13,6 @@ package.xml
 **Standard-Home.tab**
 **AppSwitcher.appMenu**
 **Recommended_Badge_Mix__c.sharingRules**
-**Recommended_Badges_Manager_Permissions.permissionSet**
-**Recommended_Badges_Manager.permissionSetGroup**
-**Recommended_Badges_Manager_Muted.mutingPermissionSet**
 **/CrisisCenter_UtilityBar.flexipage-meta.xml
 **/ContactCenter_UtilityBar.flexipage-meta.xml
 **/LightningSalesConsole_UtilityBar.flexipage-meta.xml
@@ -59,12 +56,12 @@ package.xml
 **RealTimeEvent**
 
 # Ignored Packages
-Core
+#Core
 fflib
 LWCErrorHandler
 #LWCUtils
 PrivateMixView
-RecommendedArticles
+#RecommendedArticles
 #RecommendedBadgeMix
 SortCustomMetadata
 Triggers

@@ -1,14 +1,18 @@
 <template>
-    <div class="slds-card slds-var-p-horizontal_x-large slds-var-p-vertical_small slds-var-m-vertical_x-small tileDisplay">
+    <div class="slds-var-p-horizontal_x-large slds-var-p-vertical_small slds-var-m-vertical_x-small tileDisplay">
+        <lightning-icon icon-name={iconName} size="small"></lightning-icon>
+        &nbsp;&nbsp;
         <slot name="tileContents"></slot>
         <br/>
    
         <div class="slds-grid slds-wrap slds-var-m-top_medium">
-            <template for:each={pills} for:item="pill">
-                <div key={pill.id} class="slds-var-m-horizontal_medium slds-var-p-horizontal_small pillBorder">
-                    {pill.name}
-                </div>
-            </template>
+            <ul lwc:if={pills} class="slds-list_horizontal slds-has-dividers_left">
+                <template for:each={pills} for:item="pill">
+                    <li key={pill.id} class="slds-item">
+                        {pill.name}
+                    </li>
+                </template>
+            </ul>
         </div>
     </div>
     <br/>
