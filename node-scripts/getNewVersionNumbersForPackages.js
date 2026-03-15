@@ -21,6 +21,7 @@ async function getNewVersionNumbersForPackages(packagesToUpdate) {
 }
 
 async function getLatestPackageVersionNumber(packageName, majorVersion, minorVersion) {
+    process.stdout.write(`Getting latest package version for package ${packageName} with major version ${majorVersion} and minor version ${minorVersion}\n`);
     const {stdout, stderr} = await exec(
         `sf data query -q "SELECT MajorVersion, MinorVersion, PatchVersion, BuildNumber, IsReleased FROM Package2Version WHERE Package2.Name='${packageName}' ORDER BY MajorVersion DESC, MinorVersion DESC, PatchVersion DESC, BuildNumber DESC" -t -o ${HUB_ALIAS} --json`
     );
