@@ -5,6 +5,5 @@
     <masterLabel>Recommended Articles</masterLabel>
     <targets>
         <target>lightningCommunity__Page</target>
-        <target>lightning__HomePage</target>
     </targets>
 </LightningComponentBundle>
