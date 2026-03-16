@@ -12,14 +12,14 @@ export default class RecommendedArticlesContainer extends LightningElement {
     @wire(getRecommendedArticles)
     parseRecommendedArticles({error, data}) {
         if(data) {
-            console.log(data);
             /* eslint-disable sort-keys, no-ternary */
             this.recommendedArticles = data.map(ra => ({
                 id: ra.Id,
                 name: ra.Name,
+                site: ra.Site__c,
                 title: ra.Title__c,
                 url: ra.URL__c,
-                topics: ra.TopicAssignments ? ra.TopicAssignments.map(ta => ({
+                topics: ra.TopicAssignments ? ra.TopicAssignments.filter(ta => ta.Topic.Name !== ra.Site__c).map(ta => ({
                     id: ta.Id,
                     topicId: ta.TopicId,
                     name: ta.Topic.Name
@@ -66,15 +66,8 @@ export default class RecommendedArticlesContainer extends LightningElement {
         switch(eventType) {
             case 'add':
                 filteredArticles = this.currentArticles.filter(article => {
-                    if(!article.topics) {
-                        return false;
-                    }
-
-                    // eslint-disable-next-line @lwc/lwc/no-for-of
-                    for(const topic of article.topics) {
-                        if(topic.topicName === changedFilterValue) {
-                            return true;
-                        }
+                    if(article.site === changedFilterValue || article.topics?.filter(t => t.name === changedFilterValue).length > 0) {
+                        return true;
                     }
                     return false;
                 });
@@ -85,10 +78,10 @@ export default class RecommendedArticlesContainer extends LightningElement {
                     filteredArticles = this.recommendedArticles;
                 } else {
                     filteredArticles = this.recommendedArticles.filter(article => {
-                        const topicNames = article.topics?.map(topic => topic.topicName);
+                        const topicNames = article.topics?.map(topic => topic.name);
                         
                         // eslint-disable-next-line no-magic-numbers
-                        return this.currentFilters.filter(cf => topicNames?.includes(cf) !== true).length === 0;
+                        return this.currentFilters.filter(cf => topicNames?.includes(cf) !== true && article.site !== cf).length === 0;
                     });
                 }
                 break;

@@ -1,7 +1,6 @@
 /* eslint-disable sort-imports, one-var, @lwc/lwc/no-for-of, no-underscore-dangle, no-ternary */
 import { LightningElement, wire, track } from 'lwc';
 
-import { CurrentPageReference } from 'lightning/navigation';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 
 import getData from '@salesforce/apex/RecommendedBadgeMixController.getData';
@@ -9,6 +8,7 @@ import getSortOptions from '@salesforce/apex/SortCustomMetadataController.getSor
 
 import { sortAlphabetic, sortCustom } from 'c/sortUtility';
 
+import MIX_CATEGORY_OBJECT from '@salesforce/schema/Mix_Category__c';
 import MIX_CATEGORY_ID_FIELD from '@salesforce/schema/Mix_Category__c.Id';
 import MIX_CATEGORY_NAME_FIELD from '@salesforce/schema/Mix_Category__c.Name';
 import MIX_CATEGORY_RECOMMENDED_BADGE_MIX_FIELD from '@salesforce/schema/Mix_Category__c.Recommended_Badge_Mix__c';
@@ -39,67 +39,13 @@ import RECOMMENDED_BADGE_MIX_OFFICIAL_PRACTICE_EXAM_FIELD from '@salesforce/sche
 import RECOMMENDED_BADGE_MIX_RECORD_TYPE_ID_FIELD from '@salesforce/schema/Recommended_Badge_Mix__c.RecordTypeId';
 //import RECOMMENDED_BADGE_MIX_FIELD from '@salesforce/schema/Mix_Category__c.Recommended_Badge_Mix__r';
 
-const EXPERIENCE_SITE_PAGE_TYPE = 'comm__namedPage';
 const FILTER_ADD = 'add';
 const FILTER_REMOVE = 'remove';
 const LEVEL_FILTER = 'level';
 const SPINNER_TEXT = 'Loading recommended badges...';
 const TYPE_FILTER = 'type';
 
-/* eslint-disable sort-keys */
-const TREEGRID_COLUMNS = [
-    {
-        type: 'url',
-        fieldName: BADGE_URL_FIELD.fieldApiName.replace('__c', ''),
-        label: 'Name',
-        typeAttributes: {
-            label: {
-                fieldName: RECOMMENDED_BADGE_NAME_FIELD.fieldApiName
-            }
-        },
-        initialWidth: 600
-    },
-    {
-        fieldName: BADGE_TYPE_FIELD.fieldApiName.replace('__c', ''),
-        label: 'Type',
-        sortable: true
-    },
-    {
-        fieldName: BADGE_LEVEL_FIELD.fieldApiName.replace('__c', ''),
-        label: 'Level',
-        sortable: true
-    },
-]
 
-/*
- * {
- *   "type": "comm__namedPage",
- *   "attributes": {
- *       "name": "Home"
- *   },
- *   "state": {
- *       "app": "commeditor",
- *       "redirect": "false"
- *   }
- * }
- * {
- *   "type": "comm__namedPage",
- *   "attributes": {
- *       "name": "Home"
- *   },
- *   "state": {
- *       "app": "commeditor"
- *   }
- * }
- * 
- * {
- *   "type": "standard__namedPage",
- *   "attributes": {
- *       "pageName": "home"
- *   },
- *   "state": {}
- * }
- */
 
 export default class RecommendedBadgeMixContainer extends LightningElement {
     badgeLevels;
@@ -115,25 +61,51 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
     @track filteredTreegridData;
     freeSFBenPracticeExam;
     _isExamMix = false;
-    isExperienceSite = false;
     isLoading = true;
     currentLastUpdatedDate;
     keyField = BADGE_ID_FIELD.fieldApiName;
+    mixCategoryKeyPrefix;
     mixLabel = 'Select Badge Mix';
     mixOptions;
     mixValue;
     officialExamGuide;
     officialExamTrailmix;
     officialPracticeExam;
-    pageRef;
     recordTypeNamesById;
     sortLabel = 'Sort By';
     sortOptions;
     sortValue;
     spinnerText = SPINNER_TEXT;
-    treegridColumns = TREEGRID_COLUMNS;
     treegridData;
     treegridDataByMix;
+
+    /* eslint-disable sort-keys */
+
+    get treegridColumns() {
+        return [
+            {
+                type: 'internalUrl',
+                label: 'Name',
+                typeAttributes: {
+                    id: { fieldName: BADGE_ID_FIELD.fieldApiName },
+                    label: { fieldName: RECOMMENDED_BADGE_NAME_FIELD.fieldApiName },
+                    url: { fieldName: BADGE_URL_FIELD.fieldApiName.replace('__c', '')},
+                    excludedKeyPrefixes: [this.mixCategoryKeyPrefix]
+                },
+                initialWidth: 600
+            },
+            {
+                fieldName: BADGE_TYPE_FIELD.fieldApiName.replace('__c', ''),
+                label: 'Type',
+                sortable: true
+            },
+            {
+                fieldName: BADGE_LEVEL_FIELD.fieldApiName.replace('__c', ''),
+                label: 'Level',
+                sortable: true
+            }
+        ];
+    }
 
     get displayExamResources() {
         if(this.isExamMix && this.isExperienceSite) {
@@ -156,12 +128,11 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
         this._isExamMix = recordTypeName === 'Exam';
     }
 
-    @wire(CurrentPageReference)
-    parsePageRef(pageRef) {
-        try {
-            this.pageRef = pageRef;
-            this.isExperienceSite = pageRef.type === EXPERIENCE_SITE_PAGE_TYPE;
-        } catch(error) {
+    @wire(getObjectInfo, { objectApiName : MIX_CATEGORY_OBJECT })
+    parseMixCategoryObjectInfo({error, data}) {
+        if(data) {
+            this.mixCategoryKeyPrefix = data.keyPrefix;
+        } else if(error) {
             this.template.querySelector('c-error').handleError(error);
         }
     }
@@ -275,7 +246,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
                 const newCategory = {
                     Id: item.mixCategory[MIX_CATEGORY_ID_FIELD.fieldApiName],
                     Name: item.mixCategory[MIX_CATEGORY_NAME_FIELD.fieldApiName],
-                    URL: `/${item.mixCategory[MIX_CATEGORY_ID_FIELD.fieldApiName]}`, // this.pageRef.type === "comm__namedPage" ? undefined : '/' + item.Id,
+                    URL: `/${item.mixCategory[MIX_CATEGORY_ID_FIELD.fieldApiName]}`,
                     _children: item.children,
                     Recommended_Badge_Mix__c: item.mixCategory[MIX_CATEGORY_RECOMMENDED_BADGE_MIX_FIELD.fieldApiName],
                 };

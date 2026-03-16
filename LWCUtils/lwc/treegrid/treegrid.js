@@ -1,35 +1,12 @@
-import { LightningElement, api } from 'lwc';
+import LightningTreeGrid from 'lightning/treeGrid';
+import internalUrlTemplate from './internalUrlColumn.html';
 
-export default class Treegrid extends LightningElement {
-    @api columns;
-    @api expandedRows;
-    @api keyField;
-    @api treegridData;
-    @api displayCustomTreegrid;
-    @api sortedBy;
-    @api sortDirection;
-
-    @api expandAll() {
-        this.refs.treegrid.expandAll();
-    }
-
-    @api collapseAll() {
-        this.refs.treegrid.collapseAll();
-    }
-
-    @api getCurrentExpandedRows() {
-        return this.refs.treegrid.getCurrentExpandedRows();
-    }
-
-    handleSort(event) {
-        const { fieldName, sortDirection } = event.detail;
-        this.sortedBy = fieldName;
-        this.sortDirection = sortDirection;
-        this.dispatchEvent(new CustomEvent('treegridsort', {
-            detail: {
-                fieldName,
-                sortDirection
-            }
-        }));
-    }
+export default class Treegrid extends LightningTreeGrid {
+    static customTypes = {
+        internalUrl: {
+            template: internalUrlTemplate,
+            typeAttributes: ['label', 'url', 'id', 'excludedKeyPrefixes'],
+            standardCellLayout: true
+        }
+    };
 }

@@ -1,10 +1,11 @@
 @isTest
 private class RecommendedArticlesSelector_Tests {
     @isTest
-    private static void getSObjectFieldList_test() {
+    private static void getSObjectFieldListTest() {
         List<Schema.SObjectField> expectedFieldList = new List<Schema.SObjectField> {
             RecommendedArticle__c.Id,
             RecommendedArticle__c.Name,
+            RecommendedArticle__c.Site__c,
             RecommendedArticle__c.Title__c,
             RecommendedArticle__c.URL__c
         };
@@ -13,12 +14,12 @@ private class RecommendedArticlesSelector_Tests {
     }
 
     @isTest
-    private static void getSObjectType_test() {
+    private static void getSObjectTypeTest() {
         Assert.areEqual(RecommendedArticle__c.sObjectType, new RecommendedArticlesSelector().getSObjectType(), SelectorTestErrorMessages.SOBJECT_TYPE_ERROR_MESSAGE);
     }
 
     @isTest
-    private static void selectAllWithTopics_test() {
+    private static void selectAllWithTopicsTest() {
         User u = TestSupport.generateTestUser('test', 'test@test.com', 'TestName', 'System Administrator', 'test@aol.fake.com');
         insert u;
         PermissionSet corePermissions = [SELECT Id FROM PermissionSet WHERE Name = 'Core_Permissions'];

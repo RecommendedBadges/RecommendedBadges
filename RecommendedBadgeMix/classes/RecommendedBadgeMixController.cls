@@ -52,7 +52,7 @@ public with sharing class RecommendedBadgeMixController {
         } else {
             defaultMixName = mixCategories[0].Recommended_Badge_Mix__r.Name;
         }
-        
+
         DataWrapper data = new DataWrapper(categoriesByBadgeMix, defaultMixName, badgeMixesByName);
         return data;
     }
@@ -67,16 +67,16 @@ public with sharing class RecommendedBadgeMixController {
 
         /**
          * Name of default Recommended Badge Mix
-         */        
-        @AuraEnabled 
+         */
+        @AuraEnabled
         public String defaultMix {get;set;}
 
         /**
          * Last updated dates by Recommended Badge Mix
-         */        
+         */
         @AuraEnabled
         public Map<String, Recommended_Badge_Mix__c> badgeMixesByName {get;set;}
-    
+
         private DataWrapper(Map<String, List<MixCategoryWrapper>> categoriesByBadgeMix, String defaultMix, Map<String, Recommended_Badge_Mix__c> badgeMixesByName) {
             this.categoriesByBadgeMix = categoriesByBadgeMix;
             this.defaultMix = defaultMix;
@@ -98,7 +98,7 @@ public with sharing class RecommendedBadgeMixController {
 
     /**
      * Wrapper class for Recommended Badges/Recommended Trails for recommendedBadgeMixContainer LWC.
-     */    
+     */
     public class MixCategoryChild {
         @AuraEnabled
         public String Id;
