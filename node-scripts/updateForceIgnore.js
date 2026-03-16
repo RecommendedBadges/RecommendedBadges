@@ -8,7 +8,9 @@ const FORCE_IGNORE_FILENAME = '.forceignore';
 function updateForceIgnore() {
     const sourceDirectories = [];
     for(const packageDirectory of PACKAGE_DIRECTORIES) {
-        sourceDirectories.push(packageDirectory.path);
+        if(packageDirectory.package) {
+            sourceDirectories.push(packageDirectory.path);
+        }
     }
 
     const forceIgnore = fs.readFileSync(FORCE_IGNORE_FILENAME, {encoding: 'utf8'});
