@@ -1,6 +1,7 @@
 /* eslint-disable sort-imports, one-var, @lwc/lwc/no-for-of, no-underscore-dangle, no-ternary */
 import { LightningElement, wire, track } from 'lwc';
 
+import { CurrentPageReference } from 'lightning/navigation';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 
 import getData from '@salesforce/apex/RecommendedBadgeMixController.getData';
@@ -37,15 +38,13 @@ import RECOMMENDED_BADGE_MIX_OFFICIAL_EXAM_GUIDE_FIELD from '@salesforce/schema/
 import RECOMMENDED_BADGE_MIX_OFFICIAL_EXAM_TRAILMIX_FIELD from '@salesforce/schema/Recommended_Badge_Mix__c.OfficialExamTrailmix__c';
 import RECOMMENDED_BADGE_MIX_OFFICIAL_PRACTICE_EXAM_FIELD from '@salesforce/schema/Recommended_Badge_Mix__c.OfficialPracticeExam__c';
 import RECOMMENDED_BADGE_MIX_RECORD_TYPE_ID_FIELD from '@salesforce/schema/Recommended_Badge_Mix__c.RecordTypeId';
-//import RECOMMENDED_BADGE_MIX_FIELD from '@salesforce/schema/Mix_Category__c.Recommended_Badge_Mix__r';
 
+const EXPERIENCE_SITE_PAGE_TYPE = 'comm__namedPage';
 const FILTER_ADD = 'add';
 const FILTER_REMOVE = 'remove';
 const LEVEL_FILTER = 'level';
 const SPINNER_TEXT = 'Loading recommended badges...';
 const TYPE_FILTER = 'type';
-
-
 
 export default class RecommendedBadgeMixContainer extends LightningElement {
     badgeLevels;
@@ -61,6 +60,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
     @track filteredTreegridData;
     freeSFBenPracticeExam;
     _isExamMix = false;
+    isExperienceSite = false;
     isLoading = true;
     currentLastUpdatedDate;
     keyField = BADGE_ID_FIELD.fieldApiName;
@@ -133,6 +133,16 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
         if(data) {
             this.mixCategoryKeyPrefix = data.keyPrefix;
         } else if(error) {
+            this.template.querySelector('c-error').handleError(error);
+        }
+    }
+
+    @wire(CurrentPageReference)
+    parsePageRef(pageRef) {
+        try {
+            this.pageRef = pageRef;
+            this.isExperienceSite = pageRef.type === EXPERIENCE_SITE_PAGE_TYPE;
+        } catch(error) {
             this.template.querySelector('c-error').handleError(error);
         }
     }
