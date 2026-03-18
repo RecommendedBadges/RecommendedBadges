@@ -19,7 +19,6 @@
     ".mule": true
   },
   "circleci.filters.branchFilter": "currentBranch",
-  "codeAnalyzer.pMD.customConfigFile": ".custompmdrules.xml",
   "codeAnalyzer.analyzeOnOpen.enabled": false,
   "xml.preferences.showSchemaDocumentationType": "none"
 }

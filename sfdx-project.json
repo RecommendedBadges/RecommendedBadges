@@ -38,7 +38,7 @@
       "path": "Core",
       "package": "Core",
       "versionName": "Akron",
-      "versionNumber": "2.28.0.NEXT",
+      "versionNumber": "2.29.0.NEXT",
       "default": true,
       "calculateTransitiveDependencies": true,
       "dependencies": [
@@ -64,7 +64,7 @@
       "default": false,
       "package": "Triggers",
       "versionName": "Akron",
-      "versionNumber": "2.23.0.NEXT",
+      "versionNumber": "2.24.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
@@ -72,7 +72,7 @@
         },
         {
           "package": "Core",
-          "versionNumber": "2.28.0.LATEST"
+          "versionNumber": "2.29.0.LATEST"
         }
       ]
     },
@@ -81,12 +81,12 @@
       "default": false,
       "package": "SortCustomMetadata",
       "versionName": "Akron",
-      "versionNumber": "1.32.0.NEXT",
+      "versionNumber": "1.33.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "Core",
-          "versionNumber": "2.28.0.LATEST"
+          "versionNumber": "2.29.0.LATEST"
         }
       ]
     },
@@ -95,12 +95,12 @@
       "default": false,
       "package": "RecommendedBadgeMix",
       "versionName": "Akron",
-      "versionNumber": "1.39.0.NEXT",
+      "versionNumber": "1.40.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "SortCustomMetadata",
-          "versionNumber": "1.32.0.LATEST"
+          "versionNumber": "1.33.0.LATEST"
         }
       ]
     },
@@ -108,14 +108,14 @@
       "path": "PrivateMixView",
       "package": "PrivateMixView",
       "versionName": "Akron",
-      "versionNumber": "1.36.0.NEXT",
+      "versionNumber": "1.37.0.NEXT",
       "default": false,
       "versionDescription": "Package containing classes, LWCs, and Lightning pages for the private view portion of the Recommended Badges app.",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
           "package": "Core",
-          "versionNumber": "2.28.0.LATEST"
+          "versionNumber": "2.29.0.LATEST"
         }
       ]
     },
@@ -124,7 +124,7 @@
       "default": false,
       "package": "UserInterface",
       "versionName": "Akron",
-      "versionNumber": "1.38.0.NEXT",
+      "versionNumber": "1.39.0.NEXT",
       "calculateTransitiveDependencies": true,
       "dependencies": [
         {
@@ -135,17 +135,17 @@
         },
         {
           "package": "PrivateMixView",
-          "versionNumber": "1.36.0.LATEST"
+          "versionNumber": "1.37.0.LATEST"
         },
         {
           "package": "RecommendedBadgeMix",
-          "versionNumber": "1.39.0.LATEST"
+          "versionNumber": "1.40.0.LATEST"
         }
       ]
     },
     {
       "versionName": "Ripley",
-      "versionNumber": "1.9.0.NEXT",
+      "versionNumber": "1.10.0.NEXT",
       "path": "RecommendedArticles",
       "default": false,
       "package": "RecommendedArticles",
@@ -154,7 +154,7 @@
       "dependencies": [
         {
           "package": "Core",
-          "versionNumber": "2.28.0.LATEST"
+          "versionNumber": "2.29.0.LATEST"
         }
       ],
       "unpackagedMetadata": {
@@ -194,12 +194,12 @@
     "fflib@1.11.0-1": "04t8c000000vG2PAAU",
     "LWCErrorHandler@1.13.0-1": "04t8c000000vGwxAAE",
     "LWCUtils@1.42.0-5": "04tg70000002nHZAAY",
-    "Core@2.28.0-5": "04tg70000002nSrAAI",
-    "Triggers@2.23.0-5": "04tg70000002nizAAA",
-    "SortCustomMetadata@1.32.0-5": "04tg70000002nkbAAA",
-    "PrivateMixView@1.36.0-5": "04tg70000002ownAAA",
-    "RecommendedArticles@1.9.0-5": "04tg70000002oyPAAQ",
-    "RecommendedBadgeMix@1.39.0-5": "04tg70000002pBJAAY",
-    "UserInterface@1.38.0-5": "04tg70000002pEXAAY"
+    "Core@2.29.0-2": "04tg700000031pBAAQ",
+    "Triggers@2.24.0-2": "04tg700000031sPAAQ",
+    "SortCustomMetadata@1.33.0-2": "04tg700000031xFAAQ",
+    "PrivateMixView@1.37.0-2": "04tg700000031yrAAA",
+    "RecommendedArticles@1.10.0-2": "04tg700000032A9AAI",
+    "RecommendedBadgeMix@1.40.0-2": "04tg700000032DNAAY",
+    "UserInterface@1.39.0-2": "04tg700000032JpAAI"
   }
 }
