@@ -68,7 +68,7 @@ Triggers
 UserInterface
 
 # Ignored Folders
-#unpackageable
+unpackageable
 **/tsconfig.json
 
 **/*.ts
