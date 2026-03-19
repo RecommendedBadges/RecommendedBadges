@@ -1,0 +1,12 @@
+<!--
+  @description       : Custom data type for displaying hyperlinked values with optional icons.
+  @author            : Ben Learn
+  @last modified by  : Ben Learn
+-->
+<template>
+    <lightning-formatted-url label={label} value={url}></lightning-formatted-url>
+    <template for:each={icons} for:item="icon">
+        &nbsp;
+        <lightning-icon key={icon.iconName} icon-name={icon.iconName} alternative-text={icon.alternativeText} size="xx-small"></lightning-icon>
+    </template>
+</template>
