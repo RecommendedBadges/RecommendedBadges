@@ -1,7 +1,6 @@
 <!--
   @description       : Container for a dropdown and datatable to display personal badge mixes.
   @author            : Ben Learn
-  @last modified on  : 02-17-2023
   @last modified by  : Ben Learn
 -->
 <template>
@@ -17,8 +16,7 @@
         <br/>
         
         <div style="max-height:75vh;overflow:scroll">
-          <c-datatable key-field={keyField} table-data={tableData} columns={tableColumns} has-row-actions="true" 
-            onactionclick={handleRowAction}>
+          <c-datatable key-field={keyField} data={tableData} columns={tableColumns} onrowaction={handleRowAction} hide-checkbox-column column-widths-mode="auto">
           </c-datatable>
         </div>
       </template>

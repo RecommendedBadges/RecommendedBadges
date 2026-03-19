@@ -48,9 +48,7 @@ const HIGH_PRIORITY_OPTION = {
     label: 'High Priority',
     value: 'High Priority'
 };
-
 const HIGH_PRIORITY_PREFIX = 'HP';
-
 const LOOKUP_OBJECT_NAME = 'Mix Category';
 const PROMPT_HEADER = 'Change Mix Category';
 const RESULT_ICON_NAME = 'custom:custom46';
@@ -59,13 +57,12 @@ const SPINNER_TEXT = 'Retrieving badges';
 /* eslint-disable sort-keys */
 const TABLE_COLUMNS = [
     {
+        type: 'hyperlinkWithIcon',
         label: 'Badge',
-        fieldName: URL_FIELD.fieldApiName,
-        type: 'url',
         typeAttributes: {
-            label: {
-                fieldName: BADGE_NAME_FIELD.fieldApiName
-            }
+            label: { fieldName: BADGE_NAME_FIELD.fieldApiName },
+            url: { fieldName: URL_FIELD.fieldApiName },
+            icons: { fieldName: 'icons' }
         }
     },
     {
@@ -109,11 +106,7 @@ export default class PrivateViewContainer extends LightningElement {
         try {
             this.mixCategoryData = await getMixCategoryData();
             this.populateViewOptions();
-            
-            this.recommendedBadgeData = await getPrivateMixRecommendedBadges();
-            if(this.recommendedBadgeData) {
-                this.tableData = this.recommendedBadgeData[this.dropdownViewValue];
-            }
+            this.populateRecommendedBadgeData();
             this.isLoading = false;
         } catch(err) {
             this.template.querySelector('c-error').handleError(err);
@@ -189,7 +182,7 @@ export default class PrivateViewContainer extends LightningElement {
 
         try {
             await updateRecord(recordInput);
-            this.refreshRecommendedBadgeData();
+            this.populateRecommendedBadgeData();
 
             /* eslint-disable sort-keys */
             this.dispatchEvent(new ShowToastEvent({
@@ -209,7 +202,7 @@ export default class PrivateViewContainer extends LightningElement {
         
         try {
             await deleteRecord(rowToDelete.Id.replace(HIGH_PRIORITY_PREFIX, ''));
-            this.refreshRecommendedBadgeData();
+            this.populateRecommendedBadgeData();
 
             /* eslint-disable sort-keys */
             const showToastEvent = new ShowToastEvent({
@@ -242,7 +235,7 @@ export default class PrivateViewContainer extends LightningElement {
 
         try {
             await updateRecord(recordInput);
-            this.refreshRecommendedBadgeData(); 
+            this.populateRecommendedBadgeData(); 
             this.promptIsLoading = false;
             this.displayPrompt = false;
 
@@ -264,8 +257,28 @@ export default class PrivateViewContainer extends LightningElement {
         this.disableChangeMixCategorySave = true;
     }
 
-    async refreshRecommendedBadgeData() {
-        this.recommendedBadgeData = await getPrivateMixRecommendedBadges();
-        this.tableData = this.recommendedBadgeData[this.dropdownViewValue];
+    async populateRecommendedBadgeData() {
+        const privateBadgesByCategory = await getPrivateMixRecommendedBadges();
+        const mappedPrivateBadgesByCategory = {};
+        for(const category in privateBadgesByCategory) {
+            mappedPrivateBadgesByCategory[category] = privateBadgesByCategory[category].map(badge => {
+                if(badge[HIGH_PRIORITY_ID_FIELD.fieldApiName]) {
+                    return {
+                        ...badge,
+                        icons: [
+                            {
+                                iconName: 'utility:priority',
+                                alternativeText: 'High Priority'
+                            }
+                        ]
+                    }
+                }
+                return badge;
+            });
+        }
+        this.recommendedBadgeData = mappedPrivateBadgesByCategory;
+        if(this.recommendedBadgeData) {
+            this.tableData = this.recommendedBadgeData[this.dropdownViewValue];
+        }
     }
 }
