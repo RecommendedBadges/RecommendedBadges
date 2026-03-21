@@ -56,7 +56,7 @@ async function getDependenciesBeforeTesting() {
             process.exit(1);
         }
 
-        const installedPackageVersionIds = JSON.parse(stdout).result.records.map(installedPackage => installedPackage.SubscriberPackageVersionId);
+        const installedPackageVersionIds = JSON.parse(stdout).result.map(installedPackage => installedPackage.SubscriberPackageVersionId);
         for(const installedPackage of installedPackageVersionIds) {
             possibleRequiredPackageVersionIds.delete(installedPackage);
         }
