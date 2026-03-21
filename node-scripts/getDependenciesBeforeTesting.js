@@ -23,9 +23,9 @@ async function getDependenciesBeforeTesting() {
                 !requiredPackage.startsWith(PACKAGE_ID_PREFIX) && 
                 !requiredPackage.startsWith(PACKAGE_VERSION_ID_PREFIX)
                 ) {
-                requiredPackageVersionIds.add(PACKAGE_ALIASES[requiredPackage]);
+                possibleRequiredPackageVersionIds.add(PACKAGE_ALIASES[requiredPackage]);
             } else if(requiredPackage.startsWith(PACKAGE_ID_PREFIX) && !PACKAGE_IDS.includes(requiredPackage)) {
-                requiredPackageVersionIds.add(await getPackageIdFromDependency(packageDirectory.dependencies[i]));
+                possibleRequiredPackageVersionIds.add(await getPackageIdFromDependency(packageDirectory.dependencies[i]));
             }
         }
     }
@@ -33,7 +33,7 @@ async function getDependenciesBeforeTesting() {
     if(possibleRequiredPackageVersionIds.size > 0) {
         const queryConditionIds = Array.from(possibleRequiredPackageVersionIds).map(x => '\'' + x + '\'').join(', ');
 
-        const {stdout, stderr} = await exec(
+        let {stdout, stderr} = await exec(
             `sf data query -q "SELECT SubscriberPackageVersionId, Package2Id, Package2.Name FROM Package2Version WHERE SubscriberPackageVersionId IN (${queryConditionIds})" -t -o ${HUB_ALIAS} --json`
         );
         if(stderr) {
@@ -46,6 +46,19 @@ async function getDependenciesBeforeTesting() {
             if(PACKAGE_IDS.includes(result.Package2Id)) {
                 possibleRequiredPackageVersionIds.delete(result.SubscriberPackageVersionId)
             }
+        }
+
+        ({stdout, stderr} = await exec(
+            `sf package installed list -o ${HUB_ALIAS} --json`
+        ));
+        if(stderr) {
+            process.stderr.write(`Error in getDependenciesBeforeTesting(): ${stderr}`);
+            process.exit(1);
+        }
+
+        const installedPackageVersionIds = JSON.parse(stdout).result.records.map(installedPackage => installedPackage.SubscriberPackageVersionId);
+        for(const installedPackage of installedPackageVersionIds) {
+            possibleRequiredPackageVersionIds.delete(installedPackage);
         }
 
         for(const requiredPackage of possibleRequiredPackageVersionIds) {
