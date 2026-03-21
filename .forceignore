@@ -52,20 +52,20 @@ package.xml
 **contentassets/Rremovebgpreview**
 
 ## Temp Ignored
-#**Home_Page_Default.flexipage**
+**Home_Page_Default.flexipage**
 **RealTimeEvent**
 
 # Ignored Packages
-Core
+#Core
 fflib
 LWCErrorHandler
 #LWCUtils
 #PrivateMixView
 RecommendedArticles
-RecommendedBadgeMix
+#RecommendedBadgeMix
 SortCustomMetadata
 Triggers
-#UserInterface
+UserInterface
 
 # Ignored Folders
 unpackageable

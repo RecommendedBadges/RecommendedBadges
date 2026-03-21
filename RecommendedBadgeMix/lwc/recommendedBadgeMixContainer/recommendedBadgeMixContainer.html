@@ -19,7 +19,7 @@
             </template>
         </div>
         
-        <div lwc:ref="treegridContainer" class="slds-var-p-around-small slds-col" style="min-height:300px">
+        <div class={treegridContainerClasses} style="min-height:300px">
             <div class="slds-grid slds-wrap slds-gutters" style="min-height:125px">
                 <div class="slds-col slds-size_1-of-4">
                     <c-dropdown label={mixLabel} value={mixValue} options={mixOptions} ondropdownchange={handleMixChange}>

@@ -8,8 +8,8 @@
     <div class="slds-form-element">
         <div class="slds-form-element__control">
             <div class="slds-combobox_container">
-                <div lwc:ref="dropdownDiv" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-grid slds-wrap slds-var-m-horizontal_xx-small">
-                    <span lwc:ref="lookupLabel" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class={dropdownDivClasses}>
+                    <span class={lookupLabelClasses}>
                         <label class="slds-form-element__label">
                             <template lwc:if={required}>
                                 <abbr class="slds-required" title="required">*</abbr>
@@ -17,7 +17,7 @@
                             {objectName}
                         </label>
                     </span>
-                    <span lwc:if={selectedItem} lwc:ref="lookupSelect" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1">
+                    <span lwc:if={selectedItem} class={lookupSelectClasses}>
                         <div class="slds-input-has-icon slds-input-has-icon_left-right slds-input_faux" role="none">
                             <lightning-icon icon-name={resultIconName}></lightning-icon>
                             <button type="button" class="slds-input_faux">
@@ -27,7 +27,7 @@
                         </div>
                     </span>
 
-                    <span lwc:else lwc:ref="lookupSearch" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1">
+                    <span lwc:else class={lookupSearchClasses}>
                         <lightning-input label={objectName} variant="label-hidden" type="search" onfocus={handleInputFocus} onblur={handleInputBlur} 
                             onchange={handleInputChange} required={required} placeholder={placeholder} is-loading={isSearchLoading}>
                         </lightning-input>
