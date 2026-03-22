@@ -1,4 +1,4 @@
-/* eslint-disable sort-imports, one-var, @lwc/lwc/no-for-of, no-underscore-dangle, no-ternary */
+/* eslint-disable sort-imports, one-var, @lwc/lwc/no-for-of, no-underscore-dangle, no-ternary, no-unused-vars */
 import { LightningElement, wire, track } from 'lwc';
 
 import { CurrentPageReference } from 'lightning/navigation';
@@ -79,7 +79,13 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
     treegridData;
     treegridDataByMix;
 
-    /* eslint-disable sort-keys */
+    get treegridContainerClasses() {
+        return [
+            'slds-var-p-around-small',
+            'slds-col',
+            this.isExperienceSite ? 'slds-size_5-of-6' : 'slds-size_1-of-1'
+        ];
+    }
 
     get treegridColumns() {
         return [
@@ -229,10 +235,6 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
 
         if(this.isLoading && this.treegridData) {
             this.isLoading = false;
-        }
-
-        if(!this.refs.treegridContainer.classList.contains('slds-size_1-of-1') && !this.refs.treegridContainer.classList.contains('slds-size_5-of-6')) {
-            this.refs.treegridContainer.classList.add((this.isExperienceSite ? 'slds-size_5-of-6' : 'slds-size_1-of-1'));
         }
     }
 

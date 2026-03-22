@@ -11,7 +11,6 @@ jobs:
     docker:
       - image: cimg/node:lts
     environment:
-      - DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
       - HUB_ALIAS: HubOrg
       - PACKAGE_LABEL: "create packages"
     executor: continuation/default

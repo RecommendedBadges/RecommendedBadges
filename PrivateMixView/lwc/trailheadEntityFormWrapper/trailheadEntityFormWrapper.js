@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 const OPTIONS = [
     { label: 'Recommended Badge', value: 'Recommended_Badge__c' },
@@ -7,6 +7,14 @@ const OPTIONS = [
 ];
 
 export default class TrailheadEntityFormWrapper extends LightningElement {
+    @track badgeFormClasses = {
+        'slds-hide': true,
+        'slds-show': false
+    };
+    @track trailFormClasses = {
+        'slds-hide': true,
+        'slds-show': false
+    };
     options = OPTIONS;
     _sObjectName;
 
@@ -19,12 +27,16 @@ export default class TrailheadEntityFormWrapper extends LightningElement {
         /* eslint-disable default-case */
         switch(value) {
             case 'Recommended_Badge__c':
-                this.refs.badgeForm.classList.replace('slds-hide', 'slds-show');
-                this.refs.trailForm.classList.replace('slds-show', 'slds-hide');
+                this.badgeFormClasses['slds-hide'] = false;
+                this.badgeFormClasses['slds-show'] = true;
+                this.trailFormClasses['slds-hide'] = true;
+                this.trailFormClasses['slds-show'] = false;
                 break;
             case 'Recommended_Trail__c':
-                this.refs.badgeForm.classList.replace('slds-show', 'slds-hide');
-                this.refs.trailForm.classList.replace('slds-hide', 'slds-show');
+                this.badgeFormClasses['slds-hide'] = true;
+                this.badgeFormClasses['slds-show'] = false;
+                this.trailFormClasses['slds-hide'] = false;
+                this.trailFormClasses['slds-show'] = true;
                 break;
         }
     }

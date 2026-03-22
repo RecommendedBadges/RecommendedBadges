@@ -8,6 +8,14 @@ const SEARCH_FILTER_DELAY = 500;
 
 export default class Lookup extends LightningElement {
 	allowBlur = true;
+	@track dropdownDivClasses = {
+		'slds-dropdown-trigger': true,
+		'slds-dropdown-trigger_click': true,
+		'slds-grid': true,
+		'slds-wrap': true,
+		'slds-var-m-horizontal_xx-small': true,
+		'slds-is-open': false
+	};
 	firstRender = true;
 	isSearchLoading = false;
 	_lookupItems;
@@ -20,6 +28,30 @@ export default class Lookup extends LightningElement {
 	_selectedItem;
 	timeoutId;
 	_twoColumnLayout = false;
+
+	get lookupLabelClasses() {
+		return [
+			'slds-col',
+			'slds-size_1-of-1',
+			FORM_FACTOR === 'Medium' && this.twoColumnLayout ? 'slds-medium-size_1-of-3' : 'slds-medium-size_1-of-1'
+		];
+	}
+
+	get lookupSearchClasses() {
+		return [
+			'slds-col',
+			'slds-size_1-of-1',
+			FORM_FACTOR === 'Medium' && this.twoColumnLayout ? 'slds-medium-size_2-of-3' : 'slds-medium-size_1-of-1'
+		];
+	}
+
+	get lookupSelectClasses() {
+		return [
+			'slds-col',
+			'slds-size_1-of-1',
+			FORM_FACTOR === 'Medium' && this.twoColumnLayout ? 'slds-medium-size_2-of-3' : 'slds-medium-size_1-of-1'
+		];
+	}
 
 	get twoColumnLayout() {
 		return this._twoColumnLayout;
@@ -70,12 +102,6 @@ export default class Lookup extends LightningElement {
 			this.selectedItem = this.lookupItems.find(lookupItem => lookupItem.Id === this.selectedId);
 			this.firstRender = false;
 		}
-
-		if(FORM_FACTOR === 'Medium' && this.twoColumnLayout) {
-			this.refs.lookupLabel.classList.replace('slds-medium-size_1-of-1', 'slds-medium-size_1-of-3');
-			this.refs.lookupSearch?.classList.replace('slds-medium-size_1-of-1', 'slds-medium-size_2-of-3');
-			this.refs.lookupSelect?.classList.replace('slds-medium-size_1-of-1', 'slds-medium-size_2-of-3');
-		}
 	}
 
 	@api reset() {
@@ -106,9 +132,8 @@ export default class Lookup extends LightningElement {
 	}
 
 	handleInputFocus() {
-		const div = this.refs.dropdownDiv;
-		if(!div.classList.contains('slds-is-open')) {
-				div.classList.add('slds-is-open');
+		if(!this.dropdownDivClasses['slds-is-open']) {
+			this.dropdownDivClasses['slds-is-open'] = true;
 		}
 	}
 
@@ -140,9 +165,8 @@ export default class Lookup extends LightningElement {
 	}
 
 	closeDropdown() {
-		const div = this.refs.dropdownDiv;
-		if(div.classList.contains('slds-is-open')) {
-				div.classList.remove('slds-is-open');
+		if(this.dropdownDivClasses['slds-is-open']) {
+			this.dropdownDivClasses['slds-is-open'] = false;
 		}
 	}
 }

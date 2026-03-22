@@ -56,13 +56,13 @@ package.xml
 **RealTimeEvent**
 
 # Ignored Packages
-Core
+#Core
 fflib
 LWCErrorHandler
 #LWCUtils
 #PrivateMixView
 RecommendedArticles
-RecommendedBadgeMix
+#RecommendedBadgeMix
 SortCustomMetadata
 Triggers
 #UserInterface

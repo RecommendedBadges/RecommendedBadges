@@ -3,6 +3,6 @@
         <lightning-radio-group label="Object" options={options} type="button" onchange={handleObjectChange}></lightning-radio-group>
     </div>
 
-    <c-trailhead-entity-form lwc:ref="badgeForm" class="slds-hide" s-object-name="Recommended_Badge__c"></c-trailhead-entity-form>
-    <c-trailhead-entity-form lwc:ref="trailForm" class="slds-hide" s-object-name="Recommended_Trail__c"></c-trailhead-entity-form>
+    <c-trailhead-entity-form class={badgeFormClasses} s-object-name="Recommended_Badge__c"></c-trailhead-entity-form>
+    <c-trailhead-entity-form class={trailFormClasses} s-object-name="Recommended_Trail__c"></c-trailhead-entity-form>
 </template>
