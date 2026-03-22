@@ -65,7 +65,7 @@ RecommendedArticles
 #RecommendedBadgeMix
 SortCustomMetadata
 Triggers
-UserInterface
+#UserInterface
 
 # Ignored Folders
 unpackageable
