@@ -4,7 +4,7 @@
   @last modified by  : Ben Learn
 -->
 <template>
-  <c-error></c-error>
+  <c-error lwc:ref="errorHandler"></c-error>
   <div class={divClasses}>
     <template lwc:if={isLoading}>
       <lightning-spinner alternative-text={spinnerText}></lightning-spinner>
@@ -31,7 +31,7 @@
         <c-prompt-dialog prompt-header={promptHeader} confirm-label="Save" confirm-disabled={disableChangeMixCategorySave} display-cancel="true" cancel-label="Cancel" onpromptclose={handlePromptClose} 
           onpromptconfirm={handlePromptConfirm}>
           <span slot="promptInput">
-            <c-lookup object-name={lookupObjectName} result-icon-name={lookupResultIconName} lookup-items={lookupItems} onitemselect={handleMixCategorySelect} 
+            <c-lookup lwc:ref="lookup" object-name={lookupObjectName} result-icon-name={lookupResultIconName} lookup-items={lookupItems} onitemselect={handleMixCategorySelect} 
               onselectioncleared={handleMixCategorySelectionCleared}>
             </c-lookup>
             <div lwc:if={promptIsLoading}>

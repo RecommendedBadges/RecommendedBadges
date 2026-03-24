@@ -109,7 +109,7 @@ export default class PrivateViewContainer extends LightningElement {
             this.populateRecommendedBadgeData();
             this.isLoading = false;
         } catch(err) {
-            this.template.querySelector('c-error').handleError(err);
+            this.refs.errorHandler.handleError(err);
         }
     }
 
@@ -191,7 +191,7 @@ export default class PrivateViewContainer extends LightningElement {
                 variant: 'success'
             }));
         } catch(err) {
-            this.template.querySelector('c-error').handleError(err);
+            this.refs.errorHandler.handleError(err);
         }
 
         this.isLoading = false;
@@ -212,7 +212,7 @@ export default class PrivateViewContainer extends LightningElement {
             });
             this.dispatchEvent(showToastEvent);
         } catch(err) {
-            this.template.querySelector('c-error').handleError(err);
+            this.refs.errorHandler.handleError(err);
         }
 
         this.isLoading = false;
@@ -224,7 +224,7 @@ export default class PrivateViewContainer extends LightningElement {
 
     async handlePromptConfirm() {
         this.promptIsLoading = true;
-        const selectedMixCategory = this.template.querySelector('c-lookup').selectedItem;
+        const selectedMixCategory = this.refs.lookup.selectedItem;
         /* eslint-disable camelcase */
         const recordInput = {
             fields: {
@@ -245,7 +245,7 @@ export default class PrivateViewContainer extends LightningElement {
                 variant: 'success'
             }));
         } catch(err) {
-            this.template.querySelector('c-error').handleError(err);
+            this.refs.errorHandler.handleError(err);
         }
     }
 

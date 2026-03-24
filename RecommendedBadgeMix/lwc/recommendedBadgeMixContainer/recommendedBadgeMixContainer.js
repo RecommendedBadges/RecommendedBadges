@@ -139,7 +139,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
         if(data) {
             this.mixCategoryKeyPrefix = data.keyPrefix;
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -149,7 +149,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
             this.pageRef = pageRef;
             this.isExperienceSite = pageRef.type === EXPERIENCE_SITE_PAGE_TYPE;
         } catch(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -161,7 +161,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
                 this.recordTypeNamesById[recordTypeInfo.recordTypeId] = recordTypeInfo.name;
             }
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -170,7 +170,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
         if(data) {
             this.defaultBadgeRecordTypeId = data.defaultRecordTypeId;
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -180,7 +180,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
             this.badgeLevels = [];
             data.values.forEach(value => (this.badgeLevels.push({label: value.label, value: value.value})));
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -190,7 +190,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
             this.badgeTypes = [];
             data.values.forEach(value => (this.badgeTypes.push({label: value.label, value: value.value})));
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -207,7 +207,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
             this.displayTable = true;
             this.isLoading = false;
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -224,7 +224,7 @@ export default class RecommendedBadgeMixContainer extends LightningElement {
                 })   
             }
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
