@@ -27,7 +27,7 @@ export default class RecommendedArticlesContainer extends LightningElement {
             }));
             this.currentArticles = this.recommendedArticles;
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -39,7 +39,7 @@ export default class RecommendedArticlesContainer extends LightningElement {
                 value: topic.Name
             }));
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 

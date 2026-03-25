@@ -84,7 +84,7 @@ export default class TrailheadEntityForm extends NavigationMixin(LightningElemen
         if(data) {
             this.lookupItems = [...data];
         } else if(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 
@@ -123,7 +123,7 @@ export default class TrailheadEntityForm extends NavigationMixin(LightningElemen
         if(this.saveAndNew) {
             const inputFields = this.template.querySelectorAll('lightning-input-field');
             inputFields.forEach(inputField => inputField.reset());
-            this.template.querySelector('c-lookup').reset();
+            this.refs.lookup.reset();
             /* eslint-disable sort-keys, @lwc/lwc/no-unsupported-ssr-properties, @lwc/lwc/no-restricted-browser-globals-during-ssr */
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Success',
@@ -155,6 +155,6 @@ export default class TrailheadEntityForm extends NavigationMixin(LightningElemen
                 fields[TRAIL_NAME_FIELD.fieldApiName] = this.selectedName;
                 break;
         }
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
+        this.refs.editForm.submit(fields);
     }
 }

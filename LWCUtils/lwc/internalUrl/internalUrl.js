@@ -22,7 +22,7 @@ export default class InternalUrl extends LightningElement {
             this.pageRef = pageRef;
             this.isExperienceSite = pageRef.type === EXPERIENCE_SITE_PAGE_TYPE;
         } catch(error) {
-            this.template.querySelector('c-error').handleError(error);
+            this.refs.errorHandler.handleError(error);
         }
     }
 }

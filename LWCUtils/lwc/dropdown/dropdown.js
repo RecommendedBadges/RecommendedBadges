@@ -7,7 +7,7 @@ export default class Dropdown extends LightningElement {
 
     handleChange() {
         const changeEvent = new CustomEvent('dropdownchange', {
-            detail: this.template.querySelector('lightning-combobox').value
+            detail: this.refs.dropdown.value
         });
 
         this.dispatchEvent(changeEvent);

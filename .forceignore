@@ -58,10 +58,10 @@ package.xml
 # Ignored Packages
 #Core
 fflib
-LWCErrorHandler
+#LWCErrorHandler
 #LWCUtils
 #PrivateMixView
-RecommendedArticles
+#RecommendedArticles
 #RecommendedBadgeMix
 SortCustomMetadata
 Triggers

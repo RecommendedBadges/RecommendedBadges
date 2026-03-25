@@ -1,12 +1,12 @@
 <template>
     <lightning-card title={cardTitle}>
-        <c-error></c-error>
-        <lightning-record-edit-form lwc:if={objectApiName} object-api-name={objectApiName} record-id={recordId} form-class="slds-var-p-around_small" 
+        <c-error lwc:ref="errorHandler"></c-error>
+        <lightning-record-edit-form lwc:ref="editForm" lwc:if={objectApiName} object-api-name={objectApiName} record-id={recordId} form-class="slds-var-p-around_small" 
             onload={handleLoad} onsubmit={handleSubmit} onsuccess={handleSuccess}>
             <div class="slds-grid slds-wrap slds-gutters_direct">
                 <lightning-messages class="slds-col slds-size_1-of-1"></lightning-messages>
             
-                <c-lookup class="slds-col slds-size_1-of-2 slds-medium-size_1-of-1 slds-large-size_1-of-2 inputMargin" object-name={lookupObjectName} 
+                <c-lookup lwc:ref="lookup" class="slds-col slds-size_1-of-2 slds-medium-size_1-of-1 slds-large-size_1-of-2 inputMargin" object-name={lookupObjectName} 
                     result-icon-name={lookupResultIconName} lookup-items={lookupItems} placeholder={lookupPlaceholder} selected-id={selectedLookupId} required two-column-layout 
                     onitemselect={handleLookupSelect}>
                 </c-lookup>

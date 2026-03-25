@@ -6,7 +6,7 @@
   @last modified by  : Ben Learn
 -->
 <template>
-    <c-error></c-error>
+    <c-error lwc:ref="errorHandler"></c-error>
     <div class="slds-grid">
         <div class="slds-col slds-size_1-of-6" lwc:if={isExperienceSite}>
             <template lwc:if={badgeLevels}>

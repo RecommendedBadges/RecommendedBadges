@@ -20,7 +20,6 @@ const ERROR_MODAL_DESCRIPTION = 'Displays error message';
 const ERROR_MODAL_LABEL = 'Error Modal';
 const ERROR_MODAL_SIZE = 'small';
 const EXPERIENCE_PAGE_TYPE_PREFIX = 'comm__';
-const LOGGER_NAME = 'c-logger';
 const SAVE_METHOD = 'EVENT_BUS';
 const SYSTEM_ADMINISTRATOR_PROFILE = 'System Administrator';
 
@@ -80,7 +79,7 @@ export default class Error extends LightningElement {
     }
 
     logError(error) {
-        const logger = this.template.querySelector(LOGGER_NAME);
+        const logger = this.refs.logger;
         logger.error(error.message).setError(error);
         logger.saveLog(this.saveMethod);
     }
