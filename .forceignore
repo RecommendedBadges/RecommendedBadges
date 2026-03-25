@@ -58,14 +58,14 @@ package.xml
 # Ignored Packages
 #Core
 fflib
-#LWCErrorHandler
-#LWCUtils
-#PrivateMixView
-#RecommendedArticles
-#RecommendedBadgeMix
+LWCErrorHandler
+LWCUtils
+PrivateMixView
+RecommendedArticles
+RecommendedBadgeMix
 SortCustomMetadata
 Triggers
-#UserInterface
+UserInterface
 
 # Ignored Folders
 unpackageable
