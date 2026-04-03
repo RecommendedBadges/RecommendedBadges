@@ -31,6 +31,7 @@ public inherited sharing class RecommendedArticlesSelector extends ApplicationSe
      * returns all RecommendedArticle__c along with the names of all related Topics
      * @return  `List<RecommendedArticle__c>`
      */
+    @SuppressWarnings('PMD.UnusedLocalVariable')
     public List<RecommendedArticle__c> selectAllWithTopics() {
         fflib_QueryFactory articlesQueryFactory = newQueryFactory();
 
@@ -45,7 +46,8 @@ public inherited sharing class RecommendedArticlesSelector extends ApplicationSe
 
         fflib_QueryFactory topicAssignmentsSubQueryFactory = new TopicAssignmentsSelector().addQueryFactorySubselect(articlesQueryFactory, relationshipName)
             .selectField('Topic.Id')
-            .selectField('Topic.Name');
+            .selectField('Topic.Name')
+            .setOrdering('Topic.Name', fflib_QueryFactory.SortOrder.ASCENDING);
 
         return (List<RecommendedArticle__c>) Database.query(articlesQueryFactory.toSOQL());
     }

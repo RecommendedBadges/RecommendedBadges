@@ -35,8 +35,10 @@ jobs:
             instanceUrl: https://recommendedbadges-dev-ed.my.salesforce.com
         - when:
             condition:
-              not: 
-                equal: [ main, $CIRCLE_BRANCH ]
+              and:
+                - not:
+                    equal: [ main, $CIRCLE_BRANCH ]
+                - $CIRCLE_PULL_REQUEST
             steps:
               - run:
                   name: Populate Dynamic Parameters
